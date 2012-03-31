@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: %locale% }
+    translator:      { fallback: %locale% }
     secret:          %secret%
     charset:         UTF-8
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -58,3 +58,18 @@ swiftmailer:
 jms_security_extra:
     secure_controllers:  true
     secure_all_services: false
+
+# FOS USer Configuration
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Siriux\GazerBundle\Entity\User
+    use_listener: false
+    from_email:
+        address: gazer@siriux.org
+        sender_name: Siriux Gazer
+    registration:
+        form:
+            type: siriux_user_registration
+        confirmation:
+            enabled: true
