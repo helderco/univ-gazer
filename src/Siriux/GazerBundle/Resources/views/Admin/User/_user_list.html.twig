@@ -1,0 +1,29 @@
+<table class="tablesorter" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Last Login</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td><a href="{{ path('users_edit', { 'id': user.id }) }}">{{ user.username }}</a></td>
+            <td>{{ user.email }}</td>
+            <td>{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>
+                {# <a href="{{ path('users_show', { 'id': entity.id }) }}">show</a>
+                <a href="{{ path('users_edit', { 'id': entity.id }) }}">edit</a> #}
+                <input type="image" src="{{ asset('bundles/siriuxgazer/admin/images/icn_edit.png') }}" title="Edit">
+                <input type="image" src="{{ asset('bundles/siriuxgazer/admin/images/icn_trash.png') }}" title="Delete">
+            </td> 
+        </tr> 
+        {% endfor %}
+</tbody> 
+</table>

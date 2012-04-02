@@ -5,7 +5,6 @@
 {% block breadcrumb %} <a class="current">User List</a> {% endblock %}
 
 {% block body %}
-
 <article class="module width_full">
     <header>
         <h3 class="tabs_involved">User List</h3>
@@ -17,79 +16,21 @@
 
     <div class="tab_container">
         <div id="users" class="tab_content">
-            <table class="tablesorter" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Last Login</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for entity in users %}
-                    <tr>
-                        <td>{{ entity.id }}</td>
-                        <td>{{ entity.name }}</td>
-                        <td><a href="{{ path('users_show', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
-                        <td>{{ entity.email }}</td>
-                        <td>{% if entity.lastLogin %}{{ entity.lastLogin|date('Y-m-d H:i:s') }}{% endif%}</td>
-                        <td>
-                            {# <a href="{{ path('users_show', { 'id': entity.id }) }}">show</a>
-                            <a href="{{ path('users_edit', { 'id': entity.id }) }}">edit</a> #}
-                            <input type="image" src="{{ asset('bundles/siriuxgazer/admin/images/icn_edit.png') }}" title="Edit">
-                            <input type="image" src="{{ asset('bundles/siriuxgazer/admin/images/icn_trash.png') }}" title="Delete">
-                        </td> 
-                    </tr> 
-                    {% endfor %}
-            </tbody> 
-        </table>
-    </div><!-- end of #users -->
+            {% include 'SiriuxGazerBundle:Admin/User:_user_list.html.twig' with {'users': users} %}
+        </div>
+    </div>
     
     <div class="tab_container">
         <div id="admins" class="tab_content">
-            <table class="tablesorter" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Enabled</th>
-                        <th>Locked</th>
-                        <th>Last Login</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for entity in admins %}
-                    <tr>
-                        <td>{{ entity.id }}</td>
-                        <td>{{ entity.name }}</td>
-                        <td><a href="{{ path('users_show', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
-                        <td>{{ entity.email }}</td>
-                        <td>{% if entity.lastLogin %}{{ entity.lastLogin|date('Y-m-d H:i:s') }}{% endif%}</td>
-                        <td>
-                            {# <a href="{{ path('users_show', { 'id': entity.id }) }}">show</a>
-                            <a href="{{ path('users_edit', { 'id': entity.id }) }}">edit</a> #}
-                            <input type="image" src="{{ asset('bundles/siriuxgazer/admin/images/icn_edit.png') }}" title="Edit">
-                            <input type="image" src="{{ asset('bundles/siriuxgazer/admin/images/icn_trash.png') }}" title="Delete">
-                        </td> 
-                    </tr> 
-                    {% endfor %}
-                </tbody>
-            </table>
+            {% include 'SiriuxGazerBundle:Admin/User:_user_list.html.twig' with {'users': admins} %}
         </div>
     </div>
+    
+    <footer>
+        <div class="submit_link">
+            <!--<a href="{{ path('users_new') }}">Add New</a>-->
+            <input type="submit" value="Add New" class="alt_btn" />
+        </div>
+    </footer>
 </article>
-
-<ul>
-    <li>
-        <a href="{{ path('users_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
 {% endblock %}
