@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Siriux\GazerBundle\Entity\User;
-use Siriux\GazerBundle\Form\UserType;
+use Siriux\GazerBundle\Form\Type\UserType;
 
 /**
  * User controller.
