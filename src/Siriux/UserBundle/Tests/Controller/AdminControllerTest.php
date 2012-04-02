@@ -1,10 +1,10 @@
 <?php
 
-namespace Siriux\GazerBundle\Tests\Controller;
+namespace Siriux\UserBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class UserControllerTest extends WebTestCase
+class AdminControllerTest extends WebTestCase
 {
     /*
     public function testCompleteScenario()

@@ -1,13 +1,13 @@
 <?php
 
-namespace Siriux\GazerBundle\Controller\Admin;
+namespace Siriux\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * @Route("/admin") 
+ * @Route("/admin")
  */
 class DefaultController extends Controller
 {
@@ -23,7 +23,8 @@ class DefaultController extends Controller
      * @Route("/dashboard", name="admin_dashboard")
      * @Template
      */
-    public function dashboardAction() {
+    public function dashboardAction()
+    {
         return array();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Siriux\GazerBundle\Entity;
+namespace Siriux\UserBundle\Entity;
 
 use FOS\UserBundle\Entity\User as AbstractUser;
 use Doctrine\ORM\Mapping as ORM;

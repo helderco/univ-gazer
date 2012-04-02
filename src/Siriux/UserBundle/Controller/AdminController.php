@@ -1,20 +1,20 @@
 <?php
 
-namespace Siriux\GazerBundle\Controller\Admin;
+namespace Siriux\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Siriux\GazerBundle\Entity\User;
-use Siriux\GazerBundle\Form\Type\UserType;
+use Siriux\UserBundle\Entity\User;
+use Siriux\UserBundle\Form\Type\UserType;
 
 /**
- * User controller.
+ * Admin panel controller.
  *
  * @Route("/admin/users")
  */
-class UserController extends Controller
+class AdminController extends Controller
 {
     /**
      * Lists all User entities.
@@ -26,7 +26,7 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('SiriuxGazerBundle:User')->findAll();
+        $entities = $em->getRepository('SiriuxUserBundle:User')->findAll();
         
         $users = array();
         $admins = array();
@@ -55,7 +55,7 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('SiriuxGazerBundle:User')->find($id);
+        $entity = $em->getRepository('SiriuxUserBundle:User')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
@@ -124,7 +124,7 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('SiriuxGazerBundle:User')->find($id);
+        $entity = $em->getRepository('SiriuxUserBundle:User')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
@@ -151,7 +151,7 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('SiriuxGazerBundle:User')->find($id);
+        $entity = $em->getRepository('SiriuxUserBundle:User')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find User entity.');
@@ -193,7 +193,7 @@ class UserController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('SiriuxGazerBundle:User')->find($id);
+            $entity = $em->getRepository('SiriuxUserBundle:User')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find User entity.');

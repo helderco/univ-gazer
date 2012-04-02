@@ -19,6 +19,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Siriux\UserBundle\SiriuxUserBundle(),
+            new Siriux\AdminBundle\SiriuxAdminBundle(),
             new Siriux\GazerBundle\SiriuxGazerBundle(),
         );
 

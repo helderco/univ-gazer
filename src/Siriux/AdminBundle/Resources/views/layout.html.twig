@@ -4,18 +4,17 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Siriux Gazer Admin{% endblock %}</title>
         {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('bundles/siriuxgazer/admin/css/layout.css') }}" type="text/css" media="screen" />
+        <link rel="stylesheet" href="{{ asset('bundles/siriuxadmin/css/layout.css') }}" type="text/css" media="screen" />
         {% endblock %}
         <!--[if lt IE 9]>
-            <link rel="stylesheet" href="{{ asset('bundles/siriuxgazer/admin/css/ie.css') }}" type="text/css" media="screen" />
+            <link rel="stylesheet" href="{{ asset('bundles/siriuxadmin/css/ie.css') }}" type="text/css" media="screen" />
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         {% block javascripts %}
-        <script src="{{ asset('bundles/siriuxgazer/admin/js/jquery-1.5.2.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('bundles/siriuxgazer/admin/js/hideshow.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('bundles/siriuxgazer/admin/js/jquery.tablesorter.min.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('bundles/siriuxgazer/admin/js/jquery.equalHeight.js') }}" type="text/javascript" ></script>
+        {% javascripts '@SiriuxAdminBundle/Resources/public/js/*' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
         <script type="text/javascript">
             $(document).ready(function() {
                 $(".tablesorter").tablesorter(); 
@@ -50,7 +49,7 @@
                 <h1 class="site_title"><a href="{{ path('admin_dashboard') }}">Gazer Admin</a></h1>
                 <h2 class="section_title">Dashboard</h2><div class="btn_view_site"><a href="{{ path("home") }}">View Site</a></div>
             </hgroup>
-	</header> <!-- end of header bar -->
+	</header>
         
 	<section id="secondary_bar">
             <div class="user">
@@ -70,7 +69,7 @@
                     {% endblock %}
                 </article>
             </div>
-	</section><!-- end of secondary bar -->
+	</section>
         
 	<aside id="sidebar" class="column">
             <form class="quick_search">
@@ -96,13 +95,34 @@
 
             <footer>
                 <hr />
-                <p><strong>Copyright &copy; 2011 Helder Correia</strong></p>
+                <p><strong>Copyright &copy; 2012 Helder Correia</strong></p>
                 <p>Theme by <a href="http://www.medialoot.com">MediaLoot</a></p>
             </footer>
-	</aside><!-- end of sidebar -->
+	</aside>
 
         <section id="main" class="column">
-        {% block body %}Default stuff...{% endblock %}
+            {% if app.session.hasFlash('info') %}
+                <h4 class="alert_info">
+                    {{ app.session.flash('info') }}
+                </h4>
+            {% endif %}
+            {% if app.session.hasFlash('warning') %}
+                <h4 class="alert_info">
+                    {{ app.session.flash('warning') }}
+                </h4>
+            {% endif %}
+            {% if app.session.hasFlash('error') %}
+                <h4 class="alert_info">
+                    {{ app.session.flash('error') }}
+                </h4>
+            {% endif %}
+            {% if app.session.hasFlash('success') %}
+                <h4 class="alert_info">
+                    {{ app.session.flash('success') }}
+                </h4>
+            {% endif %}
+                
+            {% block body %}Default stuff...{% endblock %}
         </section>
         
     </body>
