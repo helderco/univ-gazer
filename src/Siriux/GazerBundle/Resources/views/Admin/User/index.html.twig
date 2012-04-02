@@ -1,0 +1,95 @@
+{% extends 'SiriuxGazerBundle:Admin:layout.html.twig' %}
+
+{% block title %} User List | {{ parent() }} {% endblock %}
+
+{% block breadcrumb %} <a class="current">User List</a> {% endblock %}
+
+{% block body %}
+
+<article class="module width_full">
+    <header>
+        <h3 class="tabs_involved">User List</h3>
+        <ul class="tabs">
+            <li><a href="#users">Users</a></li>
+            <li><a href="#admins">Admins</a></li>
+        </ul>
+    </header>
+
+    <div class="tab_container">
+        <div id="users" class="tab_content">
+            <table class="tablesorter" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Last Login</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in users %}
+                    <tr>
+                        <td>{{ entity.id }}</td>
+                        <td>{{ entity.name }}</td>
+                        <td><a href="{{ path('users_show', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
+                        <td>{{ entity.email }}</td>
+                        <td>{% if entity.lastLogin %}{{ entity.lastLogin|date('Y-m-d H:i:s') }}{% endif%}</td>
+                        <td>
+                            {# <a href="{{ path('users_show', { 'id': entity.id }) }}">show</a>
+                            <a href="{{ path('users_edit', { 'id': entity.id }) }}">edit</a> #}
+                            <input type="image" src="{{ asset('bundles/siriuxgazer/admin/images/icn_edit.png') }}" title="Edit">
+                            <input type="image" src="{{ asset('bundles/siriuxgazer/admin/images/icn_trash.png') }}" title="Delete">
+                        </td> 
+                    </tr> 
+                    {% endfor %}
+            </tbody> 
+        </table>
+    </div><!-- end of #users -->
+    
+    <div class="tab_container">
+        <div id="admins" class="tab_content">
+            <table class="tablesorter" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Enabled</th>
+                        <th>Locked</th>
+                        <th>Last Login</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in admins %}
+                    <tr>
+                        <td>{{ entity.id }}</td>
+                        <td>{{ entity.name }}</td>
+                        <td><a href="{{ path('users_show', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
+                        <td>{{ entity.email }}</td>
+                        <td>{% if entity.lastLogin %}{{ entity.lastLogin|date('Y-m-d H:i:s') }}{% endif%}</td>
+                        <td>
+                            {# <a href="{{ path('users_show', { 'id': entity.id }) }}">show</a>
+                            <a href="{{ path('users_edit', { 'id': entity.id }) }}">edit</a> #}
+                            <input type="image" src="{{ asset('bundles/siriuxgazer/admin/images/icn_edit.png') }}" title="Edit">
+                            <input type="image" src="{{ asset('bundles/siriuxgazer/admin/images/icn_trash.png') }}" title="Delete">
+                        </td> 
+                    </tr> 
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</article>
+
+<ul>
+    <li>
+        <a href="{{ path('users_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{% endblock %}
