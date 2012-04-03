@@ -27,4 +27,13 @@ class DefaultController extends Controller
     {
         return array();
     }
+
+    /**
+     * @Route("/profile", name="admin_user_profile")
+     */
+    public function profileAction()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        return $this->forward('SiriuxUserBundle:Admin:edit', array('id' => $user->getId(), 'profile' => true));
+    }
 }

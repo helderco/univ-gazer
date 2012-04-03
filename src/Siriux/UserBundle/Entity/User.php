@@ -11,8 +11,8 @@ use FOS\UserBundle\Validator\Unique as AssertUnique;
  * @ORM\Entity
  * @ORM\Table(name="users")
  *
- * @AssertUnique(property="usernameCanonical", message="fos_user.username.already_used", groups={"Admin"})
- * @AssertUnique(property="emailCanonical", message="fos_user.email.already_used", groups={"Admin"})
+ * @AssertUnique(property="usernameCanonical", message="The chosen username is already taken.", groups={"Admin"})
+ * @AssertUnique(property="emailCanonical", message="The email is already associated with another user.", groups={"Admin"})
  */
 class User extends AbstractUser
 {

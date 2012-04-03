@@ -7,6 +7,13 @@ use Symfony\Component\Form\FormBuilder;
 
 class UserType extends AbstractType
 {
+    private $currentUser;
+
+    public function __construct($currentUser = false)
+    {
+        $this->currentUser = $currentUser;
+    }
+
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
@@ -14,9 +21,14 @@ class UserType extends AbstractType
             ->add('username')
             ->add('plainpassword', 'password', array('label' => 'Password'))
             ->add('email')
-            ->add('admin', 'checkbox', array('label' => 'Administrator'))
-            ->add('enabled')
         ;
+
+        if (!$this->currentUser) {
+            $builder
+                ->add('admin', 'checkbox', array('label' => 'Administrator'))
+                ->add('enabled')
+            ;
+        }
     }
 
     public function getDefaultOptions(array $options)

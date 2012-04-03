@@ -3,6 +3,7 @@
 namespace Siriux\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -24,45 +25,20 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entities = $em->getRepository('SiriuxUserBundle:User')->findAll();
+        $users = $this->getUserManager()->findUsers();
         
-        $users = array();
-        $admins = array();
+        $users_list = array();
+        $admins_list = array();
         
-        foreach ($entities as $entity) {
-            if ($entity->hasRole('ROLE_ADMIN') || $entity->isSuperAdmin()) {
-                array_push($admins, $entity);
+        foreach ($users as $user) {
+            if ($user->hasRole('ROLE_ADMIN') || $user->isSuperAdmin()) {
+                array_push($admins_list, $user);
             } else {
-                array_push($users, $entity);
+                array_push($users_list, $user);
             }
         }
 
-        return array('users' => $users, 'admins' => $admins);
-    }
-
-    /**
-     * Finds and displays a User entity.
-     *
-     * @Route("/{id}/show", name="users_show")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('SiriuxUserBundle:User')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+        return array('users' => $users_list, 'admins' => $admins_list);
     }
 
     /**
@@ -101,8 +77,7 @@ class AdminController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('users_show', array('id' => $entity->getId())));
-            
+            return $this->redirect($this->generateUrl('users', array('id' => $entity->getId())));
         }
 
         return array(
@@ -117,33 +92,57 @@ class AdminController extends Controller
      * @Route("/{id}/edit", name="users_edit")
      * @Template()
      */
-    public function editAction($id)
+    public function editAction($id, $profile = false)
     {
-        $userManager = $this->get('fos_user.user_manager');
-        $user = $userManager->findUserBy(array('id' => $id));
+        $user = $this->getUser($id);
+        $currentUser = $this->isCurrentUser($user);
 
-        if (!$user) {
-            throw $this->createNotFoundException('Unable to find user.');
+        if ($currentUser && !$profile) {
+            return $this->redirect($this->generateUrl('admin_user_profile'));
         }
 
-        $editForm = $this->createForm(new UserType(), $user);
+        $editForm = $this->createForm(new UserType($currentUser), $user);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'user'          => $user,
+            'current_user'  => $currentUser,
+            'edit_form'     => $editForm->createView(),
+            'delete_form'   => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Updates an existing User entity.
+     *
+     * @Route("/{id}/update", name="users_update")
+     * @Method("post")
+     * @Template("SiriuxUserBundle:Admin:edit.html.twig")
+     */
+    public function updateAction($id)
+    {
+        $user = $this->getUser($id);
+        $currentUser = $this->isCurrentUser($user);
+
+        $editForm = $this->createForm(new UserType($currentUser), $user);
 
         $request = $this->get('request');
-        if ($request->getMethod() == 'POST') {
-            $editForm->bindRequest($request);
+        $editForm->bindRequest($request);
 
-            if ($editForm->isValid()) {
+        if ($editForm->isValid()) {
+            $this->getUserManager()->updateUser($user);
+            $this->get('session')->setFlash('success', 'Your changes were saved!');
 
-                $userManager->updateUser($user);
-            }
-        }
+            return $this->redirect($this->generateUrl('users_edit', array('id' => $id)));
+        } 
 
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'user'        => $user,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'user'          => $user,
+            'current_user'  => $currentUser,
+            'edit_form'     => $editForm->createView(),
+            'delete_form'   => $deleteForm->createView(),
         );
     }
 
@@ -161,18 +160,55 @@ class AdminController extends Controller
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('SiriuxUserBundle:User')->find($id);
+            $user = $this->getUser($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find User entity.');
+            if ($this->isCurrentUser($user)) {
+                throw new AccessDeniedHttpException("You can't delete yourself!");
             }
 
-            $em->remove($entity);
-            $em->flush();
+            $this->getUserManager()->deleteUser($user);
         }
 
         return $this->redirect($this->generateUrl('users'));
+    }
+
+    /**
+     * Gets FOSUserBundle's user manager.
+     *
+     * @return FOS\UserBundle\Model\UserManager
+     */
+    private function getUserManager()
+    {
+        return $this->get('fos_user.user_manager');
+    }
+
+    /**
+     * Gets a user from an id.
+     *
+     * @param int $id
+     * @return SiriuxUserBundle\Entity\User
+     * @throws NotFoundHttpException if user is not found.
+     */
+    private function getUser($id) {
+        $user = $this->getUserManager()->findUserBy(array('id' => $id));
+
+        if (!$user) {
+            throw $this->createNotFoundException("Unable to find user with id $id.");
+        }
+
+        return $user;
+    }
+
+    /**
+     * Tests weather a certain user is the one currently authenticated.
+     *
+     * @param SiriuxUserBundle\Entity\User $user
+     * @return boolean
+     */
+    private function isCurrentUser($user)
+    {
+        $securityToken = $this->get('security.context')->getToken();
+        return $user->isUser($securityToken->getUser());
     }
 
     private function createDeleteForm($id)

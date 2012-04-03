@@ -2,12 +2,20 @@
 
 {% form_theme edit_form 'SiriuxAdminBundle:Form:fields.html.twig' %}
 
-{% block title %} Edit User | {{ parent() }} {% endblock %}
+{% set title = "test" %}
+
+{% block title %}
+    {% if not current_user %}Edit User{% else %} Profile {% endif %} | {{ parent() }}
+{% endblock %}
 
 {% block breadcrumb %}
-    <a href="{{ path('users') }}">Users</a>
-    <div class="breadcrumb_divider"></div>
-    <a class="current">Edit</a>
+    {% if not current_user %}
+        <a href="{{ path('users') }}">Users</a>
+        <div class="breadcrumb_divider"></div>
+        <a class="current">Edit</a>
+    {% else %}
+        <a class="current">Profile</a>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
@@ -17,20 +25,27 @@
         $(":submit[name=update]").click(function() {
             $("#user_update_form").submit();
         });
+        $('input').keypress(function(e) {
+            if (e.keyCode == 13) {
+                $('#user_update_form').submit();
+            }
+        });
+        {% if not current_user %}
         $(":submit[name=delete]").click(function() {
             if (confirm("You are about to delete a user.\nIt cannot be restored at a later time! Continue?")) {
                 $("#user_delete_form").submit();
             }
         });
+        {% endif %}
     });
     </script>
 {% endblock%}
 
 {% block body %}
 <article class="module width_full">
-    <header><h3>Update User Information</h3></header>
+    <header><h3>Update {% if not current_user %}User Information{% else %}Profile{% endif %}</h3></header>
     <div class="module_content">
-        <form id="user_update_form" action="{{ path('users_edit', { 'id': user.id }) }}" method="post">
+        <form id="user_update_form" action="{{ path('users_update', { 'id': user.id }) }}" method="post">
             {{ form_widget(edit_form) }}
         </form>
         <form id="user_delete_form" action="{{ path('users_delete', { 'id': user.id }) }}" method="post">
@@ -40,7 +55,9 @@
     <footer>
         <div class="submit_link">
             <input type="submit" name="update" value="Update" class="alt_btn" />
+            {% if not current_user %}
             <input type="submit" name="delete" value="Delete" />
+            {% endif %}
             or <a href="{{ path('users') }}">Cancel</a>
         </div>
     </footer>
