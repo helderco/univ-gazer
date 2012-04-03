@@ -11,8 +11,8 @@ use FOS\UserBundle\Validator\Unique as AssertUnique;
  * @ORM\Entity
  * @ORM\Table(name="users")
  *
- * @AssertUnique(property="usernameCanonical", message="The chosen username is already taken.", groups={"Admin"})
- * @AssertUnique(property="emailCanonical", message="The email is already associated with another user.", groups={"Admin"})
+ * @AssertUnique(property="usernameCanonical", message="The chosen username is already taken.", groups={"AdminNew", "AdminEdit"})
+ * @AssertUnique(property="emailCanonical", message="The email is already associated with another user.", groups={"AdminNew", "AdminEdit"})
  */
 class User extends AbstractUser
 {
@@ -28,28 +28,29 @@ class User extends AbstractUser
     /**
      * @ORM\Column(type="string", length="255")
      *
-     * @Assert\NotBlank(message="Please enter your name.", groups={"Registration", "Profile", "Admin"})
-     * @Assert\MinLength(limit="3", message="The name is too short. Minimum is 3 characters.", groups={"Registration", "Profile", "Admin"})
-     * @Assert\MaxLength(limit="254", message="The name is too long.", groups={"Registration", "Profile", "Admin"})
+     * @Assert\NotBlank(message="Please enter a name.", groups={"Registration", "Profile", "AdminNew", "AdminEdit"})
+     * @Assert\MinLength(limit="3", message="The name is too short. Minimum is 3 characters.", groups={"Registration", "Profile", "AdminNew", "AdminEdit"})
+     * @Assert\MaxLength(limit="254", message="The name is too long.", groups={"Registration", "Profile", "AdminNew", "AdminEdit"})
      */
     protected $name;
 
     /**
-     * @Assert\NotBlank(message="Please choose a unique username.", groups={"Admin"})
-     * @Assert\MinLength(limit="3", message="Username too short. Minimum is 3 characters.", groups={"Admin"})
-     * @Assert\MaxLength(limit="255", message="fos_user.username.long", groups={"Admin"})
+     * @Assert\NotBlank(message="Please choose a unique username.", groups={"AdminNew", "AdminEdit"})
+     * @Assert\MinLength(limit="3", message="Username too short. Minimum is 3 characters.", groups={"AdminNew", "AdminEdit"})
+     * @Assert\MaxLength(limit="255", message="fos_user.username.long", groups={"AdminNew", "AdminEdit"})
      */
     protected $username;
 
     /**
-     * @Assert\NotBlank(message="An email address is mandatory.", groups={"Admin"})
-     * @Assert\MaxLength(limit="254", message="fos_user.email.long", groups={"Admin"})
-     * @Assert\Email(message="This email is not valid.", groups={"Admin"})
+     * @Assert\NotBlank(message="An email address is mandatory.", groups={"AdminNew", "AdminEdit"})
+     * @Assert\MaxLength(limit="254", message="fos_user.email.long", groups={"AdminNew", "AdminEdit"})
+     * @Assert\Email(message="This email is not valid.", groups={"AdminNew", "AdminEdit"})
      */
     protected $email;
 
     /**
-     * @Assert\MinLength(limit="6", message="The password is too short. Minimum is 6 characters.", groups={"Admin"})
+     * @Assert\NotBlank(message="fos_user.password.blank", groups={"AdminNew"})
+     * @Assert\MinLength(limit="6", message="The password is too short. Minimum is 6 characters.", groups={"AdminNew", "AdminEdit"})
      */
     protected $plainPassword;
 

@@ -7,10 +7,12 @@ use Symfony\Component\Form\FormBuilder;
 
 class UserType extends AbstractType
 {
+    private $validationGroup;
     private $currentUser;
 
-    public function __construct($currentUser = false)
+    public function __construct($validationGroup, $currentUser = false)
     {
+        $this->validationGroup = $validationGroup;
         $this->currentUser = $currentUser;
     }
 
@@ -35,7 +37,7 @@ class UserType extends AbstractType
     {
         return array(
             'data_class' => 'Siriux\UserBundle\Entity\User',
-            'validation_groups' => array('Admin'),
+            'validation_groups' => array($this->validationGroup),
         );
     }
 

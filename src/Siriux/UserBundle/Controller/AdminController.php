@@ -38,7 +38,10 @@ class AdminController extends Controller
             }
         }
 
-        return array('users' => $users_list, 'admins' => $admins_list);
+        return array(
+            'users'  => $users_list,
+            'admins' => $admins_list,
+        );
     }
 
     /**
@@ -49,12 +52,12 @@ class AdminController extends Controller
      */
     public function newAction()
     {
-        $entity = new User();
-        $form   = $this->createForm(new UserType(), $entity);
+        $user = $this->getUserManager()->createUser()->setEnabled(true);
+        $form = $this->createForm(new UserType('AdminNew'), $user);
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
+            'user' => $user,
+            'form' => $form->createView(),
         );
     }
 
@@ -63,26 +66,27 @@ class AdminController extends Controller
      *
      * @Route("/create", name="users_create")
      * @Method("post")
-     * @Template("SiriuxGazerBundle:User:new.html.twig")
+     * @Template("SiriuxUserBundle:Admin:new.html.twig")
      */
     public function createAction()
     {
-        $entity  = new User();
-        $request = $this->getRequest();
-        $form    = $this->createForm(new UserType(), $entity);
-        $form->bindRequest($request);
+        $userManager = $this->getUserManager();
+        $user = $userManager->createUser();
+
+        $form = $this->createForm(new UserType('AdminNew'), $user);
+        $form->bindRequest($this->getRequest());
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
+            $userManager->updateUser($user);
+            $this->get('session')->setFlash('success',
+                    sprintf('A new user with id %d was created successfully', $user->getId()));
 
-            return $this->redirect($this->generateUrl('users', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('users'));
         }
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
+            'user' => $user,
+            'form' => $form->createView(),
         );
     }
 
@@ -101,7 +105,7 @@ class AdminController extends Controller
             return $this->redirect($this->generateUrl('admin_user_profile'));
         }
 
-        $editForm = $this->createForm(new UserType($currentUser), $user);
+        $editForm = $this->createForm(new UserType('AdminEdit', $currentUser), $user);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -124,10 +128,8 @@ class AdminController extends Controller
         $user = $this->getUser($id);
         $currentUser = $this->isCurrentUser($user);
 
-        $editForm = $this->createForm(new UserType($currentUser), $user);
-
-        $request = $this->get('request');
-        $editForm->bindRequest($request);
+        $editForm = $this->createForm(new UserType('AdminEdit', $currentUser), $user);
+        $editForm->bindRequest($this->getRequest());
 
         if ($editForm->isValid()) {
             $this->getUserManager()->updateUser($user);
@@ -155,9 +157,7 @@ class AdminController extends Controller
     public function deleteAction($id)
     {
         $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
+        $form->bindRequest($this->getRequest());
 
         if ($form->isValid()) {
             $user = $this->getUser($id);

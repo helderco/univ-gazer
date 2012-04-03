@@ -1,16 +1,28 @@
-<h1>User creation</h1>
+{% extends 'SiriuxAdminBundle::layout.html.twig' %}
 
-<form action="{{ path('users_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
+{% form_theme form 'SiriuxAdminBundle:Form:fields.html.twig' %}
+
+{% block title %}Create User{% endblock %}
+
+{% block breadcrumb %}
+    <a href="{{ path('users') }}">Users</a>
+    <div class="breadcrumb_divider"></div>
+    <a class="current">New</a>
+{% endblock %}
+
+{% block body %}
+<form id="user_update_form" action="{{ path('users_create') }}" method="post">
+<article class="module width_full">
+    <header><h3>Create new user</h3></header>
+    <div class="module_content">
+            {{ form_widget(form) }}
+    </div>
+    <footer>
+        <div class="submit_link">
+            <input type="submit" value="Create" class="alt_btn" />
+            or <a href="{{ path('users') }}">Cancel</a>
+        </div>
+    </footer>
+</article>
 </form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('users') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+{% endblock %}

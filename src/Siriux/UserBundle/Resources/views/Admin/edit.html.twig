@@ -2,8 +2,6 @@
 
 {% form_theme edit_form 'SiriuxAdminBundle:Form:fields.html.twig' %}
 
-{% set title = "test" %}
-
 {% block title %}
     {% if not current_user %}Edit User{% else %} Profile {% endif %} | {{ parent() }}
 {% endblock %}
