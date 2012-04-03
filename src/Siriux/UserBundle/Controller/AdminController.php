@@ -32,10 +32,7 @@ class AdminController extends Controller
         $admins = array();
         
         foreach ($entities as $entity) {
-            if ($entity->isSuperAdmin()) {
-                continue;
-            }
-            if ($entity->hasRole('ROLE_ADMIN')) {
+            if ($entity->hasRole('ROLE_ADMIN') || $entity->isSuperAdmin()) {
                 array_push($admins, $entity);
             } else {
                 array_push($users, $entity);
@@ -122,57 +119,29 @@ class AdminController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id' => $id));
 
-        $entity = $em->getRepository('SiriuxUserBundle:User')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+        if (!$user) {
+            throw $this->createNotFoundException('Unable to find user.');
         }
 
-        $editForm = $this->createForm(new UserType(), $entity);
+        $editForm = $this->createForm(new UserType(), $user);
+
+        $request = $this->get('request');
+        if ($request->getMethod() == 'POST') {
+            $editForm->bindRequest($request);
+
+            if ($editForm->isValid()) {
+
+                $userManager->updateUser($user);
+            }
+        }
+
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Edits an existing User entity.
-     *
-     * @Route("/{id}/update", name="users_update")
-     * @Method("post")
-     * @Template("SiriuxGazerBundle:User:edit.html.twig")
-     */
-    public function updateAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('SiriuxUserBundle:User')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
-        }
-
-        $editForm   = $this->createForm(new UserType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('users_edit', array('id' => $id)));
-        }
-
-        return array(
-            'entity'      => $entity,
+            'user'        => $user,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );

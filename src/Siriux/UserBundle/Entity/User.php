@@ -5,12 +5,18 @@ namespace Siriux\UserBundle\Entity;
 use FOS\UserBundle\Entity\User as AbstractUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use FOS\UserBundle\Validator\Unique as AssertUnique;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
+ *
+ * @AssertUnique(property="usernameCanonical", message="fos_user.username.already_used", groups={"Admin"})
+ * @AssertUnique(property="emailCanonical", message="fos_user.email.already_used", groups={"Admin"})
  */
-class User extends AbstractUser {
+class User extends AbstractUser
+{
+    const ROLE_ADMIN = 'ROLE_ADMIN';
     
     /**
      * @ORM\Id
@@ -20,19 +26,63 @@ class User extends AbstractUser {
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length="255", nullable=true)
+     * @ORM\Column(type="string", length="255")
+     *
+     * @Assert\NotBlank(message="Please enter your name.", groups={"Registration", "Profile", "Admin"})
+     * @Assert\MinLength(limit="3", message="The name is too short. Minimum is 3 characters.", groups={"Registration", "Profile", "Admin"})
+     * @Assert\MaxLength(limit="254", message="The name is too long.", groups={"Registration", "Profile", "Admin"})
      */
     protected $name;
-    
-    public function __construct() {
+
+    /**
+     * @Assert\NotBlank(message="Please choose a unique username.", groups={"Admin"})
+     * @Assert\MinLength(limit="3", message="Username too short. Minimum is 3 characters.", groups={"Admin"})
+     * @Assert\MaxLength(limit="255", message="fos_user.username.long", groups={"Admin"})
+     */
+    protected $username;
+
+    /**
+     * @Assert\NotBlank(message="An email address is mandatory.", groups={"Admin"})
+     * @Assert\MaxLength(limit="254", message="fos_user.email.long", groups={"Admin"})
+     * @Assert\Email(message="This email is not valid.", groups={"Admin"})
+     */
+    protected $email;
+
+    /**
+     * @Assert\MinLength(limit="6", message="The password is too short. Minimum is 6 characters.", groups={"Admin"})
+     */
+    protected $plainPassword;
+
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function setName($name) {
-        $this->name = $name;
+    public function getName()
+    {
+        return $this->name;
     }
 
-    public function getName() {
-        return $this->name;
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole(self::ROLE_ADMIN);
+    }
+
+    public function setAdmin($boolean)
+    {
+        if ($boolean) {
+            $this->addRole(self::ROLE_ADMIN);
+        } else {
+            $this->removeRole(self::ROLE_ADMIN);
+        }
+
+        return $this;
     }
 }

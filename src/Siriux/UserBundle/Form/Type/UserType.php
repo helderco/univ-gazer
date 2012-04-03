@@ -12,8 +12,9 @@ class UserType extends AbstractType
         $builder
             ->add('name')
             ->add('username')
-            ->add('password', 'password')
+            ->add('plainpassword', 'password', array('label' => 'Password'))
             ->add('email')
+            ->add('admin', 'checkbox', array('label' => 'Administrator'))
             ->add('enabled')
         ;
     }
@@ -21,7 +22,8 @@ class UserType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class' => 'Siriux\UserBundle\Entity\User'
+            'data_class' => 'Siriux\UserBundle\Entity\User',
+            'validation_groups' => array('Admin'),
         );
     }
 

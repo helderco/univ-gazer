@@ -16,7 +16,7 @@
             <td>{{ user.name }}</td>
             <td><a href="{{ path('users_edit', { 'id': user.id }) }}">{{ user.username }}</a></td>
             <td>{{ user.email }}</td>
-            <td>{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
             <td>
                 {# <a href="{{ path('users_show', { 'id': entity.id }) }}">show</a>
                 <a href="{{ path('users_edit', { 'id': entity.id }) }}">edit</a> #}

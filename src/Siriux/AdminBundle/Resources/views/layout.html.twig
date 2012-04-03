@@ -12,6 +12,7 @@
 	<![endif]-->
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         {% block javascripts %}
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
         {% javascripts '@SiriuxAdminBundle/Resources/public/js/*' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
@@ -101,26 +102,9 @@
 	</aside>
 
         <section id="main" class="column">
-            {% if app.session.hasFlash('info') %}
-                <h4 class="alert_info">
-                    {{ app.session.flash('info') }}
-                </h4>
-            {% endif %}
-            {% if app.session.hasFlash('warning') %}
-                <h4 class="alert_info">
-                    {{ app.session.flash('warning') }}
-                </h4>
-            {% endif %}
-            {% if app.session.hasFlash('error') %}
-                <h4 class="alert_info">
-                    {{ app.session.flash('error') }}
-                </h4>
-            {% endif %}
-            {% if app.session.hasFlash('success') %}
-                <h4 class="alert_info">
-                    {{ app.session.flash('success') }}
-                </h4>
-            {% endif %}
+            {% for key, message in app.session.getFlashes %}
+                <h4 class="alert_{{key}}">{{ message }}</h4>
+            {% endfor %}
                 
             {% block body %}Default stuff...{% endblock %}
         </section>

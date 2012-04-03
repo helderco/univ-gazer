@@ -10,25 +10,39 @@
     <a class="current">Edit</a>
 {% endblock %}
 
-{% block body %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $(":submit[name=update]").click(function() {
+            $("#user_update_form").submit();
+        });
+        $(":submit[name=delete]").click(function() {
+            if (confirm("You are about to delete a user.\nIt cannot be restored at a later time! Continue?")) {
+                $("#user_delete_form").submit();
+            }
+        });
+    });
+    </script>
+{% endblock%}
 
+{% block body %}
 <article class="module width_full">
     <header><h3>Update User Information</h3></header>
     <div class="module_content">
-        <form action="{{ path('users_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <form id="user_update_form" action="{{ path('users_edit', { 'id': user.id }) }}" method="post">
             {{ form_widget(edit_form) }}
-            <input type="submit" value="Update" class="alt_btn" />
+        </form>
+        <form id="user_delete_form" action="{{ path('users_delete', { 'id': user.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
         </form>
     </div>
     <footer>
         <div class="submit_link">
-            <form action="{{ path('users_delete', { 'id': entity.id }) }}" method="post">
-                {{ form_widget(delete_form) }}
-                <input type="submit" value="Delete" />
-                or <a href="{{ path('users') }}">Cancel</a>
-            </form>
+            <input type="submit" name="update" value="Update" class="alt_btn" />
+            <input type="submit" name="delete" value="Delete" />
+            or <a href="{{ path('users') }}">Cancel</a>
         </div>
     </footer>
 </article>
-
 {% endblock %}
