@@ -76,3 +76,7 @@
 [WebProfilerExtraBundle]
     git=http://github.com/Elao/WebProfilerExtraBundle.git
     target=bundles/Elao/WebProfilerExtraBundle
+
+[TinymceBundle]
+    git=git://github.com/stfalcon/TinymceBundle.git
+    target=/bundles/Stfalcon/Bundle/TinymceBundle
