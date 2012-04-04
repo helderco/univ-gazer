@@ -72,3 +72,7 @@
 [DoctrineMigrationsBundle]
     git=http://github.com/symfony/DoctrineMigrationsBundle.git
     target=/bundles/Symfony/Bundle/DoctrineMigrationsBundle
+
+[WebProfilerExtraBundle]
+    git=http://github.com/Elao/WebProfilerExtraBundle.git
+    target=bundles/Elao/WebProfilerExtraBundle
