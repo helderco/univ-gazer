@@ -20,7 +20,7 @@ class AdminController extends Controller
     /**
      * Lists all User entities.
      *
-     * @Route("/", name="users")
+     * @Route("", name="users")
      * @Template()
      */
     public function indexAction()
@@ -29,6 +29,7 @@ class AdminController extends Controller
         
         $users_list = array();
         $admins_list = array();
+        $delete_forms = array();
         
         foreach ($users as $user) {
             if ($user->hasRole('ROLE_ADMIN') || $user->isSuperAdmin()) {
@@ -36,11 +37,13 @@ class AdminController extends Controller
             } else {
                 array_push($users_list, $user);
             }
+            $delete_forms[$user->getId()] = $this->createDeleteForm($user->getId())->createView();
         }
 
         return array(
             'users'  => $users_list,
             'admins' => $admins_list,
+            'delete_forms' => $delete_forms,
         );
     }
 
@@ -163,10 +166,10 @@ class AdminController extends Controller
             $user = $this->getUser($id);
 
             if ($this->isCurrentUser($user)) {
-                throw new AccessDeniedHttpException("You can't delete yourself!");
+                $this->get('session')->setFlash('error', "You can't delete yourself!");
+            } else {
+                $this->getUserManager()->deleteUser($user);
             }
-
-            $this->getUserManager()->deleteUser($user);
         }
 
         return $this->redirect($this->generateUrl('users'));

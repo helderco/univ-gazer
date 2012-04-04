@@ -515,6 +515,16 @@ padding: 15px 10px;
 .tablesorter input[type=image] {
 margin-right: 10px;}
 
+.tablesorter img {
+margin-right: 5px;
+margin-left: 0px;
+}
+
+.tablesorter td form.trash_user input {
+margin-right: 0px;
+margin-left: 5px;
+}
+
 ul.tabs {
 	margin: 3px 10px 0 0;
 	padding: 0;
@@ -602,6 +612,11 @@ cursor: pointer;
 }
 
 input[type=submit]:hover {
+color: #333333;
+}
+
+input[type=submit].delete_btn:hover {
+background: #D0D1D4 url(../images/btn_delete.png) repeat-x;
 color: #333333;
 }
 

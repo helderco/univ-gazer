@@ -48,7 +48,7 @@
 	<header id="header">
             <hgroup>
                 <h1 class="site_title"><a href="{{ path('admin_dashboard') }}">Gazer Admin</a></h1>
-                <h2 class="section_title">Dashboard</h2><div class="btn_view_site"><a href="{{ path("home") }}">View Site</a></div>
+                <h2 class="section_title">{% block section %}Dashboard{% endblock %}</h2><div class="btn_view_site"><a href="{{ path("home") }}">View Site</a></div>
             </hgroup>
 	</header>
         

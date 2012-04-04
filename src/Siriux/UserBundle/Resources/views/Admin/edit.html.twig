@@ -1,19 +1,9 @@
-{% extends 'SiriuxAdminBundle::layout.html.twig' %}
+{% extends 'SiriuxUserBundle:Admin:__section.html.twig' %}
 
 {% form_theme edit_form 'SiriuxAdminBundle:Form:fields.html.twig' %}
 
-{% block title %}
-    {% if not current_user %}Edit User{% else %} Profile {% endif %} | {{ parent() }}
-{% endblock %}
-
-{% block breadcrumb %}
-    {% if not current_user %}
-        <a href="{{ path('users') }}">Users</a>
-        <div class="breadcrumb_divider"></div>
-        <a class="current">Edit</a>
-    {% else %}
-        <a class="current">Profile</a>
-    {% endif %}
+{% block subtitle %}
+    {% if not current_user %} Edit {% else %} Profile {% endif %}
 {% endblock %}
 
 {% block javascripts %}
@@ -54,7 +44,7 @@
         <div class="submit_link">
             <input type="submit" name="update" value="Update" class="alt_btn" />
             {% if not current_user %}
-            <input type="submit" name="delete" value="Delete" />
+            <input type="submit" name="delete" value="Delete" class="delete_btn" />
             {% endif %}
             or <a href="{{ path('users') }}">Cancel</a>
         </div>

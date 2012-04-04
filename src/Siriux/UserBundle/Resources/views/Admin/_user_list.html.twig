@@ -1,27 +1,31 @@
 <table class="tablesorter" cellspacing="0">
     <thead>
         <tr>
-            <th>ID</th>
+            <th style="text-align:center">ID</th>
             <th>Name</th>
             <th>Username</th>
             <th>Email</th>
-            <th>Last Login</th>
-            <th>Actions</th>
+            <th style="text-align:center">Enabled</th>
+            <th style="text-align:center">Last Login</th>
+            <th style="text-align:center">Actions</th>
         </tr>
     </thead>
     <tbody>
         {% for user in users %}
         <tr>
-            <td>{{ user.id }}</td>
+            <td style="text-align:center">{{ user.id }}</td>
             <td>{{ user.name }}</td>
-            <td><a href="{{ path('users_edit', { 'id': user.id }) }}">{{ user.username }}</a></td>
+            <td><a href="{{ path('users_edit', { 'id': user.id }) }}" title="Edit user">{{ user.username }}</a></td>
             <td>{{ user.email }}</td>
-            <td>{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
-            <td>
-                {# <a href="{{ path('users_show', { 'id': entity.id }) }}">show</a>
-                <a href="{{ path('users_edit', { 'id': entity.id }) }}">edit</a> #}
-                <input type="image" src="{{ asset('bundles/siriuxadmin/images/icn_edit.png') }}" title="Edit">
-                <input type="image" src="{{ asset('bundles/siriuxadmin/images/icn_trash.png') }}" title="Delete">
+            <td style="text-align:center">{% if user.enabled %} Yes {% else %} No {% endif %}</td>
+            <td style="text-align:center">{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td style="text-align:center">
+                <a href="{{ path('users_edit', { 'id': user.id }) }}" title="Edit user"><img src="{{ asset('bundles/siriuxadmin/images/icn_edit.png') }}" alt="edit" /></a>
+                <form action="{{ path("users_delete", {'id': user.id}) }}" method="post" class="trash_user" style="display:inline;">
+                    {{ form_widget(delete_forms[user.id]._token) }}
+                    {{ form_widget(delete_forms[user.id].id) }}
+                    <input type="image" src="{{ asset('bundles/siriuxadmin/images/icn_trash.png') }}" class="trash_user" title="Delete user" />
+                </form>
             </td> 
         </tr> 
         {% endfor %}
