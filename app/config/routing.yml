@@ -17,9 +17,17 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
 
+SiriuxUserBundle:
+    resource: "@SiriuxUserBundle/Controller/"
+    type: annotation   
+    
+SiriuxAdminBundle:
+    resource: "@SiriuxAdminBundle/Controller/"
+    type: annotation
+ 
 SiriuxGazerBundle:
     resource: "@SiriuxGazerBundle/Controller/"
-    type:     annotation
+    type: annotation
 
 # Internal routing configuration to handle ESI
 #_internal:

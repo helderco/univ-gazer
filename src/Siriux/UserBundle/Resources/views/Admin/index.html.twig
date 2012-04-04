@@ -1,0 +1,47 @@
+{% extends 'SiriuxUserBundle:Admin:__section.html.twig' %}
+
+{% block subtitle %} List {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("form.trash_user").submit(function() {
+            return confirm("You are about to delete a user.\nIt cannot be restored at a later time! Continue?");
+        });
+        $('#add_new').click(function() {
+            window.location = "{{ path('users_new') }}"
+        });
+    });
+    </script>
+{% endblock%}
+
+{% block body %}
+<article class="module width_full">
+    <header>
+        <h3 class="tabs_involved">User List</h3>
+        <ul class="tabs">
+            <li><a href="#users">Users</a></li>
+            <li><a href="#admins">Admins</a></li>
+        </ul>
+    </header>
+
+    <div class="tab_container">
+        <div id="users" class="tab_content">
+            {% include 'SiriuxUserBundle:Admin:_user_list.html.twig' with {'users': users, 'delete_forms': delete_forms } %}
+        </div>
+    </div>
+    
+    <div class="tab_container">
+        <div id="admins" class="tab_content">
+            {% include 'SiriuxUserBundle:Admin:_user_list.html.twig' with {'users': admins, 'delete_forms': delete_forms } %}
+        </div>
+    </div>
+    
+    <footer>
+        <div class="submit_link">
+            <input id="add_new" type="submit" value="Add New" title="Add new user" class="alt_btn" />
+        </div>
+    </footer>
+</article>
+{% endblock %}

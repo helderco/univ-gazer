@@ -1,0 +1,6 @@
+services:
+    siriux_user.registration.form.type:
+        class: Siriux\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: siriux_user_registration }

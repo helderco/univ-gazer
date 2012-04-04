@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Siriux Gazer Admin{% endblock %}</title>
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('bundles/siriuxadmin/css/layout.css') }}" type="text/css" media="screen" />
+        {% endblock %}
+        <!--[if lt IE 9]>
+            <link rel="stylesheet" href="{{ asset('bundles/siriuxadmin/css/ie.css') }}" type="text/css" media="screen" />
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+        {% block javascripts %}
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+        {% javascripts '@SiriuxAdminBundle/Resources/public/js/*' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".tablesorter").tablesorter(); 
+
+                //When page loads...
+                $(".tab_content").hide(); //Hide all content
+                $("ul.tabs li:first").addClass("active").show(); //Activate first tab
+                $(".tab_content:first").show(); //Show first tab content
+
+                //On Click Event
+                $("ul.tabs li").click(function() {
+                    $("ul.tabs li").removeClass("active"); //Remove any "active" class
+                    $(this).addClass("active"); //Add "active" class to selected tab
+                    $(".tab_content").hide(); //Hide all tab content
+
+                    var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+                    $(activeTab).fadeIn(); //Fade in the active ID content
+                    return false;
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(function(){
+                $('.column').equalHeight();
+            });
+        </script>
+        {% endblock %}
+    </head>
+    <body>
+	<header id="header">
+            <hgroup>
+                <h1 class="site_title"><a href="{{ path('admin_dashboard') }}">Gazer Admin</a></h1>
+                <h2 class="section_title">{% block section %}Dashboard{% endblock %}</h2><div class="btn_view_site"><a href="{{ path("home") }}">View Site</a></div>
+            </hgroup>
+	</header>
+        
+	<section id="secondary_bar">
+            <div class="user">
+                <p>
+                    {% if app.user.name %} {{ app.user.name }} (<a href="{{ path("admin_user_profile") }}">{{ app.user.username }}</a>)
+                    {% else %} {{ app.user.username }}
+                    {% endif %}
+                </p>
+                <!-- <a class="logout_user" href="#" title="Logout">Logout</a> -->
+            </div>
+            <div class="breadcrumbs_container">
+                <article class="breadcrumbs">
+                    <a href="{{ path("admin_dashboard") }}">Gazer Admin</a>
+                    <div class="breadcrumb_divider"></div>
+                    {% block breadcrumb %}
+                    <a class="current">Dashboard</a>
+                    {% endblock %}
+                </article>
+            </div>
+	</section>
+        
+	<aside id="sidebar" class="column">
+            <form class="quick_search">
+                    <input type="text" value="Quick Search" onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;">
+            </form>
+            <hr/>
+            <h3>Users</h3>
+            <ul class="toggle">
+                <li class="icn_add_user"><a href="{{ path("users_new") }}">Add New User</a></li>
+                <li class="icn_view_users"><a href="{{ path("users") }}">View Users</a></li>
+                <li class="icn_profile"><a href="{{ path("admin_user_profile") }}">Your Profile</a></li>
+            </ul>
+            <h3>Content</h3>
+            <ul class="toggle">
+                <li class="icn_categories"><a href="#">Categories</a></li>
+                <li class="icn_photo"><a href="#">Gallery</a></li>
+            </ul>
+            <h3>Admin</h3>
+            <ul class="toggle">
+                <li class="icn_settings"><a href="#">Settings</a></li>
+                <li class="icn_jump_back"><a href="#">Logout</a></li>
+            </ul>
+
+            <footer>
+                <hr />
+                <p><strong>Copyright &copy; 2012 Helder Correia</strong></p>
+                <p>Theme by <a href="http://www.medialoot.com">MediaLoot</a></p>
+            </footer>
+	</aside>
+
+        <section id="main" class="column">
+            {% for key, message in app.session.getFlashes %}
+                <h4 class="alert_{{key}}">{{ message }}</h4>
+            {% endfor %}
+                
+            {% block body %}Default stuff...{% endblock %}
+        </section>
+        
+    </body>
+</html>

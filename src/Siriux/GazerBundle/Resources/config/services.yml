@@ -1,6 +1,0 @@
-services:
-    siriux_gazer.registration.form.type:
-        class: Siriux\GazerBundle\Form\Type\RegistrationFormType
-        arguments: [%fos_user.model.user.class%]
-        tags:
-            - { name: form.type, alias: siriux_user_registration }
