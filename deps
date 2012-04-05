@@ -80,3 +80,23 @@
 [TinymceBundle]
     git=git://github.com/stfalcon/TinymceBundle.git
     target=/bundles/Stfalcon/Bundle/TinymceBundle
+
+[SonataMediaBundle]
+    git=http://github.com/sonata-project/SonataMediaBundle.git
+    target=/bundles/Sonata/MediaBundle
+
+[EasyExtendsBundle]
+    git=http://github.com/sonata-project/SonataEasyExtendsBundle.git
+    target=/bundles/Sonata/EasyExtendsBundle
+
+[Imagine]:
+    git=http://github.com/avalanche123/Imagine.git
+    target=/imagine
+
+[Gaufrette]
+    git=http://github.com/KnpLabs/Gaufrette.git
+    target=/gaufrette
+
+[buzz]
+    git=git://github.com/kriswallsmith/Buzz.git
+    target=/buzz

@@ -11,6 +11,7 @@ $loader->registerNamespaces(array(
     'FOS'              => __DIR__.'/../vendor/bundles',
     'Elao'             => __DIR__.'/../vendor/bundles',
     'Stfalcon'         => __DIR__.'/../vendor/bundles',
+    'Sonata'           => __DIR__.'/../vendor/bundles',
     'Doctrine\\Common' => __DIR__.'/../vendor/doctrine-common/lib',
     'Doctrine\\DBAL\\Migrations' => __DIR__.'/../vendor/doctrine-migrations/lib',
     'Doctrine\\DBAL'   => __DIR__.'/../vendor/doctrine-dbal/lib',
@@ -18,6 +19,10 @@ $loader->registerNamespaces(array(
     'Monolog'          => __DIR__.'/../vendor/monolog/src',
     'Assetic'          => __DIR__.'/../vendor/assetic/src',
     'Metadata'         => __DIR__.'/../vendor/metadata/src',
+    'Application'      => __DIR__,
+    'Imagine'          => __DIR__.'/../vendor/imagine/lib',
+    'Gaufrette'        => __DIR__.'/../vendor/gaufrette/src',
+    'Buzz'             => __DIR__.'/../vendor/buzz/lib',
 ));
 $loader->registerPrefixes(array(
     'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',

@@ -20,6 +20,8 @@ class AppKernel extends Kernel
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Sonata\MediaBundle\SonataMediaBundle(),
+            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             new Siriux\UserBundle\SiriuxUserBundle(),
             new Siriux\AdminBundle\SiriuxAdminBundle(),
             new Siriux\GazerBundle\SiriuxGazerBundle(),

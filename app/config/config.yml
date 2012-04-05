@@ -48,9 +48,33 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
 
+# Sonata Media
+sonata_media:
+    default_context: default
+    db_driver: doctrine_orm
+    contexts:
+        default:
+            providers:
+                - sonata.media.provider.image
+
+            formats:
+                small: { width: 100, quality: 70}
+                big:   { width: 500, quality: 70}
+
+    cdn:
+        server:
+            path: /uploads/media
+
+    filesystem:
+        local:
+            directory: %kernel.root_dir%/../web/uploads/media
+            create: false
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: %mailer_transport%
+    encryption: ssl
+    auth_mode: login
     host:      %mailer_host%
     username:  %mailer_user%
     password:  %mailer_password%
