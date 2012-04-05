@@ -1,13 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Siriux Gazer{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+    {% block stylesheets %}{% endblock %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    {% block javascripts %}{% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+
+<div id="dropcontainer">
+    <div id="dropdown">
+        <div class="container">
+        {% block drop_body %}{% endblock %}
+        </div>
+    </div>
+    {% block drop_btn %}<a href="#" class="dropbtn "></a>{% endblock %}
+</div>
+
+<div class="container">
+    {% block body %}{% endblock %}
+    {% block footer_sep %}<div class="footerseperator"></div>{% endblock %}
+    <footer>
+        <h1>Copyright &copy; 2012 Helder Correia&#46;</h1>
+        <h2>Atlas HTML Theme by <a href="http://purtypixels.com" title="PurtyPixels">Purty Pixels</a></h2>
+        <h3>Access the <a href="{{ path("admin_root") }}" title="backend">administration</a> area</h3>
+    </footer>
+</div>
+
+</body>
 </html>
