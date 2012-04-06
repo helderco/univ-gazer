@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             new Siriux\UserBundle\SiriuxUserBundle(),
             new Siriux\AdminBundle\SiriuxAdminBundle(),
+            new Siriux\GalleryBundle\SiriuxGalleryBundle(),
             new Siriux\GazerBundle\SiriuxGazerBundle(),
         );
 
