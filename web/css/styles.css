@@ -399,7 +399,7 @@ img.logo {
 .portfoliohover {
 	width: 210px;
 	height: 54px;
-	background-image: url(../images/portfolio/workhover.png);
+	background-image: url(../images/thumbhover.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	position: absolute;
