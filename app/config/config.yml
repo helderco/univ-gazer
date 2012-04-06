@@ -50,10 +50,19 @@ doctrine:
 
 # Sonata Media
 sonata_media:
-    default_context: default
     db_driver: doctrine_orm
+    class:
+        media:              Siriux\GalleryBundle\Entity\Media
+        gallery:            Siriux\GalleryBundle\Entity\Gallery
+        gallery_has_media:  Siriux\GalleryBundle\Entity\GalleryHasMedia
+
+    default_context: default
+
     contexts:
         default:
+            download:
+                strategy: siriux.gallery.security.user_strategy
+
             providers:
                 - sonata.media.provider.image
 
