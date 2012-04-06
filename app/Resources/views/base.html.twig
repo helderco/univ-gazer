@@ -15,19 +15,57 @@
 <div id="dropcontainer">
     <div id="dropdown">
         <div class="container">
-        {% block drop_body %}{% endblock %}
+        {% block drop_body %}
+
+            {% block promo %}
+            <div class="promo">
+                <a href="{{ path('root') }}" title="Home"><img src="{{ asset('images/logo.png') }}" alt="Gazer" class="logo"></a>
+                <h4>gaze verb /gāz/ Look steadily and intently, esp. in admiration, surprise, or thought</h4>
+            </div>
+            {% endblock promo %}
+
+            <ul class="nav">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+            {% else %}
+                <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+                <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
+                <li><a href="{{ path('fos_user_resetting_request') }}">{{ 'layout.reset'|trans({}, 'FOSUserBundle') }}</a></li>
+            {% endif %}
+            </ul>
+
+            {% block drop_content %}
+            <h2>Welcome to Gazer.</h2>
+            <p class="dpara1 dparas">Gazer is your private photo gallery.</p>
+            <p class="dpara2 dparas">If you don't have an account with us yet, register today and start using Gazer. You will be able to add photos to categories, update their information, and view them in a beautiful layout.</p>
+            <h5 class="dropquote">&#8220;A good snapshot stops a moment from running away.&#8221; - Eudora Welty</h5>
+            {% endblock %}
+
+            <div class="side">
+                <div class="dropsep"></div>
+                {% block drop_side %}
+                <h6>{% block fos_user_header %}{% endblock fos_user_header %}</h6>
+                {% block fos_user_content %}{% endblock fos_user_content %}
+                {% endblock drop_side %}
+            </div>
+
+        {% endblock drop_body %}
         </div>
     </div>
-    {% block drop_btn %}<a href="#" class="dropbtn "></a>{% endblock %}
+    {% block drop_btn %}<span class="dropbtn"></span>{% endblock %}
 </div>
 
 <div class="container">
+    {% block promo2 %}{{ block('promo') }}{% endblock %}
     {% block body %}{% endblock %}
     {% block footer_sep %}<div class="footerseperator"></div>{% endblock %}
     <footer>
         <h1>Copyright &copy; 2012 Helder Correia&#46;</h1>
         <h2>Atlas HTML Theme by <a href="http://purtypixels.com" title="PurtyPixels">Purty Pixels</a></h2>
+
+        {% if is_granted("IS_AUTHENTICATED_ANONYMOUSLY") or is_granted("ROLE_ADMIN") or is_granted("ROLE_SUPER_ADMIN") %}
         <h3>Access the <a href="{{ path("admin_root") }}" title="backend">administration</a> area</h3>
+        {% endif %}
     </footer>
 </div>
 

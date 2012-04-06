@@ -1,35 +1,6 @@
 {% extends '::base.html.twig' %}
 
 {% block body_class %}dropped{% endblock %}
+{% block promo2%}{% endblock %}
 {% block drop_btn %}{% endblock %}
 {% block footer_sep %}{% endblock %}
-
-{% block drop_body %}
-<a href="{{ path('root') }}" title="Home"><img src="{{ asset('images/logo.png') }}" alt="Gazer" class="logo"></a>
-    
-    <ul>
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
-    {% else %}
-        <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
-        <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
-        <li><a href="{{ path('fos_user_resetting_request') }}">{{ 'layout.reset'|trans({}, 'FOSUserBundle') }}</a></li>
-    {% endif %}
-    </ul>
-
-    <h4>gaze verb /gāz/ Look steadily and intently, esp. in admiration, surprise, or thought</h4>
-
-    <h2>Welcome to Gazer.</h2>
-    {% block _fos_form_errors %}
-    {% endblock %}
-    <p class="dpara1 dparas">Gazer is your private photo gallery.</p>
-    <p class="dpara2 dparas">If you don't have an account with us yet, register today and start using Gazer. You will be able to add photos to categories, update their information, and view them in a beautiful layout.</p>
-    
-    <h5 class="dropquote">&#8220;A good snapshot stops a moment from running away.&#8221; - Eudora Welty</h5>
-
-    <side>
-        <div class="dropsep"></div>
-        <h6>{% block fos_user_header %}{% endblock fos_user_header %}</h6>
-        {% block fos_user_content %}{% endblock fos_user_content %}
-    </side>
-{% endblock %}

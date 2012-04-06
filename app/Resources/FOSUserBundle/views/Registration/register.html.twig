@@ -32,8 +32,33 @@
 {% endspaceless %}
 {% endblock field_widget %}
 
-{% block _fos_form_errors %}
-    {{ form_errors(form) }}
+{% block drop_content %}
+    {% set _errors = [] %}
+
+    {# Find global form errors #}
+    {% for error in form.vars.errors %}
+        {% set _errors = _errors|merge([error.messageTemplate|trans(error.messageParameters, 'validators')]) %}
+    {% endfor %}
+
+    {# Find field errors #}
+    {% for child in form %}
+        {% for error in child.vars.errors %}
+            {% set _errors = _errors|merge([child.vars.id|trans({}, 'FOSUserBundle') ~ ': ' ~ error.messageTemplate|trans(error.messageParameters, 'validators')]) %}
+        {% endfor %}
+    {% endfor %}
+
+    {% if _errors|length > 0 %}
+        {% spaceless %}
+        <h2>Woops! Please fix the following errors...</h2>
+        <ul class="error">
+            {% for error in _errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endspaceless %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
 {% endblock %}
 
 {% block fos_user_content %}

@@ -14,6 +14,9 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl("home"));
+        }
         return $this->redirect($this->generateUrl("fos_user_security_login"));
     }
 

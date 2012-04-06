@@ -85,7 +85,7 @@ body {
 
 #dropdown {
 	width: 100%;
-	height: 390px;
+	height: 370px;
 	background: url(../images/dropbg.jpg) repeat;
 	border-bottom: 1px solid rgba(255,255,255,.25);
 	float: left;
@@ -104,6 +104,7 @@ body.dropped #dropdown {
 	height: 50px;
 	float: right;
 	margin-top: -1px;
+	cursor: pointer;
 }
 .dropbtn.active {
 	background-image: url(../images/controls.png);
@@ -113,7 +114,6 @@ body.dropped #dropdown {
 	height: 50px;
 }
 img.logo {
-	float: left;
 	margin-top: 25px;
 }
 #dropdown h3 {
@@ -123,62 +123,60 @@ img.logo {
 	margin-left: 162px;
 	margin-top: 27px;
 }
-#dropdown ul {
-	float: left;
+#dropdown ul.nav {
+    position: absolute;
+    top: 0px;
 	width: 300px;
 	height: 66px;
 	overflow: hidden;
 	margin-top: 25px;
 	margin-left: 300px;
 }
-#dropdown ul li {
+#dropdown ul.nav li {
 	float: left;
 	padding-bottom: 9px;
-        padding-right: 32px;
+    padding-right: 32px;
 }
-#dropdown ul li a{
+#dropdown ul.nav li a{
 	font-size: 12px;
 	color: #9fa6b5;
 }
-#dropdown ul li a:hover {
+#dropdown ul.nav li a:hover {
 	color: #b4b7bc;
 }
-#dropdown h4 {
+.promo h4 {
 	font-size: 12px;
 	color: #b4b7bc;
-	float: left;
-	clear: left;
 	line-height: 18px;
 	width: 230px;
 	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
 	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
-	margin-top: -20px;
 }
-.dropavatar {
-	clear: left;
-	float: left;
-	margin-top: 46px;
-}
+
 #dropdown h2 {
 	clear: left;
 	font-size: 17px;
 	color: #e0e4e7;
-	float: left;
 	margin-top: 46px;
 	margin-left: 30px;
 	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
 	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
 	width: 540px;
 }
-#dropdown p.dparas {
+#dropdown ul.error {
+    margin-top: 12px;
+}
+#dropdown ul.error li {
+    margin-top: 6px;
+}
+#dropdown p.dparas, #dropdown ul.error li {
 	font-size: 12px;
 	color: #aaadb3;
-	float: left;
 	width: 540px;
 	line-height: 18px;
 	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
 	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
-        margin-left: 30px;
+    margin-left: 30px;
 }
 #dropdown p.dpara1 {
 	margin-top: 10px;
@@ -197,31 +195,38 @@ img.logo {
 	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
 	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
 }
-.dropsep {
+#dropdown .dropsep {
+    position: absolute;
+    top: 0px;
+    left: -1px;
 	width: 1px;
-	height: 243px;
+	height: 300px;
 	background: #2b2c2e;
 	border-right: 1px solid #000000;
-	float: left;
-	margin-left: 179px;
-	margin-top: -243px;
 }
 
-#dropdown h6 {
+#dropdown div.side {
+    position:absolute;
+    height: 280px;
+    width: 248px;
+    left: 836px;
+    top: 33px;
+    padding: 10px 33px;
+}
+
+#dropdown div.side h6 {
 	font-size: 14px;
 	color: #e0e4e7;
-	float: left;
-	clear: left;
-	margin-left: 700px;
-	margin-top: -270px;
 	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
 	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
 }
 #dropdown form {
-	float: left;
-	clear: left;
-	margin-top: -221px;
-	margin-left: 700px;
+    margin-top: 24px;
+}
+
+#dropdown #fos_user_registration_register {
+    margin-top: 0px;
+    padding-top: 0px;
 }
 #dropdown form input:focus, #dropdown form textarea:focus {
 	outline: none;
@@ -236,7 +241,6 @@ img.logo {
 	height: 28px;
 	background: #cacccf;
 	border: 1px solid #000000;
-	float: left;
 	color: #1c1d1f;
 	font-size: 12px;
 	text-indent: 9px;
@@ -246,17 +250,15 @@ img.logo {
 	height: 26px;
 	background: #cacccf;
 	border: 1px solid #000000;
-	float: left;
 	color: #1c1d1f;
 	font-size: 12px;
 	text-indent: 10px;
 	clear: left;
 }
 #dropdown form input {
-        margin-top: 15px;
+    margin-top: 15px;
 }
 #dropdown form textarea {
-	float: left;
 	clear: left;
 	width: 235px;
 	height: 78px;
@@ -270,13 +272,13 @@ img.logo {
 	resize: none;
 }
 #dropdown form ::-webkit-input-placeholder {
-    	color: #1c1d1f;
+	color: #1c1d1f;
 	font-size: 12px;
 	text-indent: 9px;
 	font-family: sans-serif;
 }
 #dropdown form :-moz-placeholder {
-    	color: #1c1d1f;
+	color: #1c1d1f;
 	font-size: 12px;
 	text-indent: 9px;
 	font-family: sans-serif;
@@ -289,10 +291,13 @@ img.logo {
 	font-size: 13px;
 }
 
+#dropdown form label {
+    display: block;
+}
+
 .dropsubmitbtn {
 	font-family: sans-serif;
-	float: left;
-	clear: left;
+	float: right;
 	outline: none;
 	border: none;
 	background: none;
@@ -300,7 +305,6 @@ img.logo {
 	text-shadow: 0px 1px 0px #000000;
 	filter: dropshadow(color=#00000, offx=0, offy=1);
 	font-size: 12px;
-	margin-left: 180px;
 	margin-top: 15px;
 	cursor: pointer;
 }
@@ -337,7 +341,6 @@ img.logo {
 }
 #filter {
 	float: right;
-	margin-top: 50px;
 }
 #filter a {
 	font-family: sans-serif;
