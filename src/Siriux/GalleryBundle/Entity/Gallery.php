@@ -10,6 +10,7 @@
 
 namespace Siriux\GalleryBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Entity\BaseGallery as BaseGallery;
 
 /**
