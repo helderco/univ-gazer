@@ -3,9 +3,16 @@
 {% block fos_user_header %}Login:{% endblock fos_user_header %}
 
 {% block fos_user_content %}
+    {% if app.session is not empty %}
+        {% set targetUrl = app.session.get('_security.target_path') %}
+        {% if targetUrl is sameas(url('admin_root')) %}
+        <div class="alert">Please enter your administration credentials to access the backend.</div>
+        {% endif %}
+    {% endif %}
+
 <form action="{{ path("fos_user_security_check") }}" method="post">
     {% if error %}
-        <div class="error">{{ error|trans({}, 'FOSUserBundle') }}</div>
+        <div class="error form_errors">{{ error|trans({}, 'FOSUserBundle') }}</div>
     {% endif %}
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
     <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}" />

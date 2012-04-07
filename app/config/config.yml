@@ -58,8 +58,8 @@ sonata_media:
                 - sonata.media.provider.image
 
             formats:
-                small: { width: 100, quality: 70}
-                big:   { width: 500, quality: 70}
+                small: { width: 214, height: 144, quality: 70}
+                big:   { width: 600, quality: 70}
 
     cdn:
         server:
@@ -97,6 +97,9 @@ fos_user:
             type: siriux_user_registration
         confirmation:
             enabled: true
+    profile:
+        form:
+            type: siriux_user_profile
 
 stfalcon_tinymce:
     include_jquery: false

@@ -1,5 +1,11 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
+{% block fos_user_header %}{{ 'layout.reset_request'|trans({}, 'FOSUserBundle') }}{% endblock %}
+
 {% block fos_user_content %}
-{% include "FOSUserBundle:Resetting:reset_content.html.twig" %}
+{% form_theme form theme %}
+<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
+    {{ form_widget(form) }}
+    <input type="submit" value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }} &rarr;" class="dropsubmitbtn" />
+</form>
 {% endblock fos_user_content %}

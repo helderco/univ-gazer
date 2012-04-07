@@ -126,16 +126,17 @@ img.logo {
 #dropdown ul.nav {
     position: absolute;
     top: 0px;
-	width: 300px;
+	width: 400px;
 	height: 66px;
 	overflow: hidden;
 	margin-top: 25px;
-	margin-left: 300px;
+	margin-left: 224px;
 }
 #dropdown ul.nav li {
-	float: left;
+	float: right;
+    text-align: right;
 	padding-bottom: 9px;
-    padding-right: 32px;
+    padding-left: 32px;
 }
 #dropdown ul.nav li a{
 	font-size: 12px;
@@ -163,12 +164,35 @@ img.logo {
 	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
 	width: 540px;
 }
+#dropdown .side .form_errors, #dropdown .side .alert {
+    margin-bottom: 24px;
+}
 #dropdown ul.error {
     margin-top: 12px;
 }
 #dropdown ul.error li {
     margin-top: 6px;
 }
+
+#dropdown .side ul.error {
+    margin-top: -6px;
+}
+#dropdown .side ul.error li {
+    margin-left: 0px;
+    margin-top: 3px;
+}
+
+#dropdown p {
+	font-size: 12px;
+	color: #aaadb3;
+	line-height: 18px;
+	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
+	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
+}
+#dropdown .side p {
+    margin-bottom: 6px;
+}
+
 #dropdown p.dparas, #dropdown ul.error li {
 	font-size: 12px;
 	color: #aaadb3;
@@ -219,9 +243,30 @@ img.logo {
 	color: #e0e4e7;
 	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
 	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
+    margin-bottom: 24px;
 }
+
+#dropdown .alert {
+	color: #aaadb3;
+    font-size: 12px;
+}
+#dropdown dl, #dropdown .alert, #dropdown .side p {
+	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
+	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
+}
+#dropdown dl dt {
+	color: #e0e4e7;
+	font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+#dropdown dl dd {
+	color: #aaadb3;
+	font-size: 12px;
+    margin-bottom: 20px;
+}
+
 #dropdown form {
-    margin-top: 24px;
 }
 
 #dropdown #fos_user_registration_register {
@@ -256,7 +301,7 @@ img.logo {
 	clear: left;
 }
 #dropdown form input {
-    margin-top: 15px;
+    margin-bottom: 15px;
 }
 #dropdown form textarea {
 	clear: left;
@@ -267,21 +312,23 @@ img.logo {
 	color: #1c1d1f;
 	font-size: 12px;
 	text-indent: 9px;
-	margin-top: 15px;
+	margin-bottom: 15px;
 	padding-top: 10px;
 	resize: none;
 }
 #dropdown form ::-webkit-input-placeholder {
-	color: #1c1d1f;
+	color: #5f5f5f;
 	font-size: 12px;
 	text-indent: 9px;
 	font-family: sans-serif;
+    font-style: italic;
 }
 #dropdown form :-moz-placeholder {
-	color: #1c1d1f;
+	color: #5f5f5f;
 	font-size: 12px;
 	text-indent: 9px;
 	font-family: sans-serif;
+    font-style: italic;
 }
 #dropdown form label, #dropdown form div.error {
 	font-family: sans-serif;
@@ -294,7 +341,9 @@ img.logo {
 #dropdown form label {
     display: block;
 }
-
+.alert {
+    font-style: italic;
+}
 .dropsubmitbtn {
 	font-family: sans-serif;
 	float: right;
@@ -305,10 +354,21 @@ img.logo {
 	text-shadow: 0px 1px 0px #000000;
 	filter: dropshadow(color=#00000, offx=0, offy=1);
 	font-size: 12px;
-	margin-top: 15px;
 	cursor: pointer;
 }
 .dropsubmitbtn:hover {
+	color: #dcdfe6;
+}
+
+#dropdown .side a {
+	font-family: sans-serif;
+	color: #a9b0b5;
+	text-shadow: 0px 1px 0px #000000;
+	filter: dropshadow(color=#00000, offx=0, offy=1);
+	font-size: 12px;
+	margin-top: 15px;
+}
+#dropdown .side a:hover {
 	color: #dcdfe6;
 }
 

@@ -11,6 +11,7 @@ security:
 # Profile
 profile:
     show:
+        name: Name
         username: Username
         email: Email
     edit:
@@ -31,16 +32,16 @@ registration:
     back: Back to the originating page.
     submit: Register
     flash:
-        user_created: The user has been created successfully
+        user_created: The user has been created successfully.
     email:
-        subject: Welcome %username%!
+        subject: Welcome to Gazer, %username%!
         message: |
             Hello %username%!
 
-            To finish activating your account - please visit %confirmationUrl%
+            To finish activating your account, please visit %confirmationUrl%
 
             Regards,
-            the Team.
+            the Gazer Team.
 
 # Password resetting
 resetting:
@@ -59,25 +60,30 @@ resetting:
         message: |
             Hello %username%!
 
-            To reset your password - please visit %confirmationUrl%
+            To reset your password, please visit %confirmationUrl%
+
+            If you didn't request to reset your password at Gazer, please disregard this email.
 
             Regards,
-            the Team.
+            the Gazer team.
 
 # Global strings
 layout:
     logout: Logout
     login: Login
     register: Register
+    registered: Registration
     profile: Profile
+    profile_info: Profile information
     reset: Forgot password
     reset_request: Reset password
     logged_in_as: Logged in as %username%
 
 # Form field labels
-fos_user_profile_form_user_username: "Username:"
-fos_user_profile_form_user_email: "Email:"
-fos_user_profile_form_current: "Current Password:"
+fos_user_profile_form_user_name: "Name"
+fos_user_profile_form_user_username: "Username"
+fos_user_profile_form_user_email: "Email"
+fos_user_profile_form_current: "Current Password"
 
 fos_user_registration_form_name: "Name"
 fos_user_registration_form_username: "Username"
@@ -86,9 +92,9 @@ fos_user_registration_form_plainPassword: "Password"
 fos_user_registration_form_plainPassword_first: "Password"
 fos_user_registration_form_plainPassword_second: "Repeat Password"
 
-fos_user_resetting_form_new_first: "New password:"
-fos_user_resetting_form_new_second: "Verification:"
+fos_user_resetting_form_new_first: "New password"
+fos_user_resetting_form_new_second: "Verification"
 
-fos_user_change_password_form_new_first: "New password:"
-fos_user_change_password_form_new_second: "Verification:"
-fos_user_change_password_form_current: "Current password:"
+fos_user_change_password_form_new_first: "New password"
+fos_user_change_password_form_new_second: "Verification"
+fos_user_change_password_form_current: "Current password"
