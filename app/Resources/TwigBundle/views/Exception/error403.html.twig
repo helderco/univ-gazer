@@ -1,0 +1,13 @@
+{% extends 'SiriuxGazerBundle:Default:index.html.twig' %}
+
+{% block title %}403: Access denied | {{ parent() }}{% endblock %}
+
+{% block drop_content %}
+    <h2>Access denied!</h2>
+    <img src="{{ asset('images/404.png') }}" width="144" height="96" alt="404 error">
+    <p class="dpara2 dparas">Where are you trying to go?</p>
+    <p class="dpara1 dparas">
+        We're sorry, but you are not authorized to view this page. If you think
+        this is a mistake, please e-mail us at {{ sytem_email }} and let us know.
+    </p>
+{% endblock %}

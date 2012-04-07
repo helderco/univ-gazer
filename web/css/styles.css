@@ -116,6 +116,11 @@ body.dropped #dropdown {
 img.logo {
 	margin-top: 25px;
 }
+#drop_content img {
+    float: left;
+    margin-right: 24px;
+    margin-left: 33px;
+}
 #dropdown h3 {
 	font-size: 12px;
 	color: #b4b7bc;
@@ -159,6 +164,7 @@ img.logo {
 	font-size: 17px;
 	color: #e0e4e7;
 	margin-top: 46px;
+    margin-bottom: 20px;
 	margin-left: 30px;
 	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
 	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
@@ -188,11 +194,8 @@ img.logo {
 	line-height: 18px;
 	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
 	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
-}
-#dropdown .side p {
     margin-bottom: 6px;
 }
-
 #dropdown p.dparas, #dropdown ul.error li {
 	font-size: 12px;
 	color: #aaadb3;
@@ -201,12 +204,6 @@ img.logo {
 	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
 	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
     margin-left: 30px;
-}
-#dropdown p.dpara1 {
-	margin-top: 10px;
-}
-#dropdown p.dpara2 {
-	margin-top: 20px;
 }
 #dropdown h5.dropquote {
 	font-family: Georgia;

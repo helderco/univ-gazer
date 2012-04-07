@@ -37,6 +37,7 @@
             {% endif %}
             </ul>
 
+            <div id="drop_content">
             {% block drop_content %}
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <h2>Hey, {{ app.user.username }}!</h2>
@@ -49,6 +50,7 @@
                 <h5 class="dropquote">&#8220;A good snapshot stops a moment from running away.&#8221; - Eudora Welty</h5>
             {% endif %}
             {% endblock %}
+            </div>
 
             <div class="side">
                 <div class="dropsep"></div>

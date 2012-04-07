@@ -2,6 +2,9 @@ imports:
     - { resource: parameters.ini }
     - { resource: security.yml }
 
+parameters:
+    system_email: "gazer@siriux.org"
+
 framework:
     #esi:             ~
     translator:      { fallback: %locale% }
@@ -20,6 +23,8 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    globals:
+        system_email: %system_email%
 
 # Assetic Configuration
 assetic:
@@ -90,7 +95,7 @@ fos_user:
     user_class: Siriux\UserBundle\Entity\User
     use_listener: false
     from_email:
-        address: gazer@siriux.org
+        address: %system_email%
         sender_name: Siriux Gazer
     registration:
         form:

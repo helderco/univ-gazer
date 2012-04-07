@@ -1,0 +1,14 @@
+{% extends 'SiriuxGazerBundle:Default:index.html.twig' %}
+
+{% block title %}An Error Occured: {{ status_text }}| {{ parent() }}{% endblock %}
+
+{% block drop_content %}
+    <h2>Oops! An Error Occurred</h2>
+    <p class="dpara2 dparas">
+        The server returned a "{{ status_code }} {{ status_text }}".</p>
+    <p class="dpara1 dparas">
+        Something is broken. Please e-mail us at {{ system_email }} and let us
+        know what you were doing when this error occurred. We will fix it as
+        soon as possible. Sorry for any inconvenience caused.
+    </p>
+{% endblock %}
