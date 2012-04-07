@@ -1,0 +1,23 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_header %}Login:{% endblock fos_user_header %}
+
+{% block fos_user_content %}
+    {% if app.session is not empty %}
+        {% set targetUrl = app.session.get('_security.target_path') %}
+        {% if targetUrl is sameas(url('admin_root')) %}
+        <div class="alert">Please enter your administration credentials to access the backend.</div>
+        {% endif %}
+    {% endif %}
+
+<form action="{{ path("fos_user_security_check") }}" method="post">
+    {% if error %}
+        <div class="error form_errors">{{ error|trans({}, 'FOSUserBundle') }}</div>
+    {% endif %}
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}" />
+    <input type="password" id="password" name="_password" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}" />
+    <label for="remember_me"><input type="checkbox" id="remember_me" name="_remember_me" value="on" /> {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }} &rarr;" class="dropsubmitbtn" />
+</form>
+{% endblock fos_user_content %}

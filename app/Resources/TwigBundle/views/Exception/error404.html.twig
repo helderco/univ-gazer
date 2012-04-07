@@ -1,0 +1,14 @@
+{% extends 'SiriuxGazerBundle:Default:index.html.twig' %}
+
+{% block title %}404: Page not found | {{ parent() }}{% endblock %}
+
+{% block drop_content %}
+    <h2>These aren't the droids you're looking for!</h2>
+    <img src="{{ asset('images/404.png') }}" width="144" height="96" alt="404 error">
+    <p class="dpara2 dparas">Apparently, you broke the internet!</p>
+    <p class="dpara1 dparas">
+        The page you requested was not found. Try checking the URL for errors,
+        then hit the refresh button on your browser. If you think you didn't
+        make a mistake, please e-mail us at {{ system_email }} and let us know.
+    </p>
+{% endblock %}

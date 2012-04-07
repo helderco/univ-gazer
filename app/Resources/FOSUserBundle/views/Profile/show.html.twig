@@ -1,0 +1,15 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_header %}{{ 'layout.profile_info'|trans({}, 'FOSUserBundle') }}:{% endblock %}
+
+{% block fos_user_content %}
+<dl class="fos_user_user_show">
+    <dt>{{ 'profile.show.name'|trans({}, 'FOSUserBundle') }}:</dt>
+    <dd>{{ user.name }}</dd>
+    <dt>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}:</dt>
+    <dd>{{ user.username }}</dd>
+    <dt>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}:</dt>
+    <dd>{{ user.email }}</dd>
+</dl>
+<a href="{{ path('fos_user_profile_edit') }}"class="fos_user_profile_show">Edit profile &rarr;</a>
+{% endblock fos_user_content %}

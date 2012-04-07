@@ -2,6 +2,9 @@ imports:
     - { resource: parameters.ini }
     - { resource: security.yml }
 
+parameters:
+    system_email: "gazer@siriux.org"
+
 framework:
     #esi:             ~
     translator:      { fallback: %locale% }
@@ -20,6 +23,8 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    globals:
+        system_email: %system_email%
 
 # Assetic Configuration
 assetic:
@@ -67,8 +72,8 @@ sonata_media:
                 - sonata.media.provider.image
 
             formats:
-                small: { width: 100, quality: 70}
-                big:   { width: 500, quality: 70}
+                small: { width: 214, height: 144, quality: 70}
+                big:   { width: 600, quality: 70}
 
     cdn:
         server:
@@ -99,13 +104,16 @@ fos_user:
     user_class: Siriux\UserBundle\Entity\User
     use_listener: false
     from_email:
-        address: gazer@siriux.org
+        address: %system_email%
         sender_name: Siriux Gazer
     registration:
         form:
             type: siriux_user_registration
         confirmation:
             enabled: true
+    profile:
+        form:
+            type: siriux_user_profile
 
 stfalcon_tinymce:
     include_jquery: false

@@ -1,0 +1,33 @@
+{% extends '::base.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".dropbtn").click(function(){
+                $("#dropdown").slideToggle("slow");
+                $(this).toggleClass("active");
+            });
+        });
+    </script>
+    <script src="{{ asset('js/jquery.quicksand.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <nav id="filter"></nav>
+    <div class="portfolioseperator"></div>
+    <div class="portfoliocontainer">
+        <ul id="stage">
+            <li data-tags="Web Design">
+                    <a href="#"><span class="portfoliohover"><h1 class="porthover1">Cool Rollover Titles</h1><h1 class="porthover2">As well as some nifty sub-titles</h1></span><img src="images/portfolio/work1.png" alt="" /></a>
+            </li>
+            <li data-tags="Logo/Branding,Print Design">
+                    <a href="#"><span class="portfoliohover"><h1 class="porthover1">Cool Rollover Titles</h1><h1 class="porthover2">As well as some nifty sub-titles</h1></span><img src="images/portfolio/work2.png" alt="" /></a>
+            </li>
+            <li data-tags="Web Design,Logo/Branding">
+                    <a href="#"><span class="portfoliohover"><h1 class="porthover1">Cool Rollover Titles</h1><h1 class="porthover2">As well as some nifty sub-titles</h1></span><img src="images/portfolio/work3.png" alt="" /></a>
+            </li>
+
+        </ul>
+    </div>
+{% endblock %}
