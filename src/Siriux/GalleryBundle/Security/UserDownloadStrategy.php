@@ -3,6 +3,7 @@
 namespace Siriux\GalleryBundle\Security;
 
 use Sonata\MediaBundle\Model\MediaInterface;
+use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 

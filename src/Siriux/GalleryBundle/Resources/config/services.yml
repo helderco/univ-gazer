@@ -1,4 +1,4 @@
 services:
     siriux.gallery.security.user_strategy:
         class: Siriux\GalleryBundle\Security\UserDownloadStrategy
-        arguments: [%security.context%]
+        arguments: [@security.context]
