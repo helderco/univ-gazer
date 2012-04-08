@@ -273,12 +273,18 @@ img.logo {
 #dropdown form input:focus, #dropdown form textarea:focus {
 	outline: none;
 }
-#dropdown form input[type=text], #dropdown form input[type=email], #dropdown form input[type=password], #dropdown form textarea {
+#dropdown form input[type=text],
+#dropdown form input[type=email],
+#dropdown form input[type=password],
+#dropdown form select,
+#dropdown form textarea {
 	-webkit-box-shadow: 0px 0px 0px 3px rgba(255, 255, 255, .1);
 	-moz-box-shadow: 0px 0px 0px 3px rgba(255, 255, 255, .1);
 	box-shadow: 0px 0px 0px 3px rgba(255, 255, 255, .1);
 }
-#dropdown form input[type=text], #dropdown form input[type=password] {
+#dropdown form select,
+#dropdown form input[type=text],
+#dropdown form input[type=password] {
 	width: 237px;
 	height: 28px;
 	background: #cacccf;
@@ -297,7 +303,8 @@ img.logo {
 	text-indent: 10px;
 	clear: left;
 }
-#dropdown form input {
+#dropdown form input,
+#dropdown form select {
     margin-bottom: 15px;
 }
 #dropdown form textarea {
@@ -312,6 +319,13 @@ img.logo {
 	margin-bottom: 15px;
 	padding-top: 10px;
 	resize: none;
+}
+
+#dropdown form input[type=file] {
+	height: 28px;
+    color: #aaadb3;
+    font-size: 12px;
+    margin-bottom: 0px;
 }
 #dropdown form ::-webkit-input-placeholder {
 	color: #5f5f5f;

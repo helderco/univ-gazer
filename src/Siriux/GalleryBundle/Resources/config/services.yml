@@ -1,4 +1,14 @@
 services:
     siriux.gallery.security.user_strategy:
         class: Siriux\GalleryBundle\Security\UserDownloadStrategy
-        arguments: [@security.context]
+        arguments: ["@security.context"]
+
+    siriux.image.manager:
+        class: Siriux\GalleryBundle\Model\ImageManager
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@sonata.media.manager.gallery", "@sonata.media.manager.media"]
+
+    siriux.type.media:
+        class: Siriux\GalleryBundle\Form\Type\MediaType
+        arguments: ["@sonata.media.pool"]
+        tags:
+            - {name: form.type, alias: siriux_media_type}

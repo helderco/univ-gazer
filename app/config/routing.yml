@@ -32,7 +32,11 @@ SiriuxUserBundle:
 SiriuxAdminBundle:
     resource: "@SiriuxAdminBundle/Controller/"
     type: annotation
- 
+
+SiriuxGalleryBundle:
+    resource: "@SiriuxGalleryBundle/Controller/"
+    type: annotation
+
 SiriuxGazerBundle:
     resource: "@SiriuxGazerBundle/Controller/"
     type: annotation

@@ -57,7 +57,7 @@
                 {% block drop_side %}
                 <h6>{% block fos_user_header %}{% endblock fos_user_header %}</h6>
                 {% for key, message in app.session.getFlashes %}
-                <div class="alert alert_{{key}}">{{ message|trans({}, 'FOSUserBundle') }}</div>
+                    <div class="alert alert_{{key}}">{{ message|trans({}, 'FOSUserBundle') }}</div>
                 {% endfor %}
                 {% block fos_user_content %}{% endblock fos_user_content %}
                 {% endblock drop_side %}
@@ -78,9 +78,9 @@
         <h2>Atlas HTML Theme by <a href="http://purtypixels.com" title="PurtyPixels">Purty Pixels</a></h2>
 
         {% if not is_granted('ROLE_USER') or is_granted("ROLE_ADMIN") %}
-        <h3>Access the <a href="{{ path("admin_root") }}" title="backend">administration</a> area</h3>
+            <h3>Access the <a href="{{ path("admin_root") }}" title="backend access">administration</a> area</h3>
         {% else %}
-        <h3>You can contact us at <a href="mailto:gazer@siriux.org">gazer@siriux.org</a> for any questions.</h3>
+            <h3>You can contact us at <a href="mailto:{{ system_email }}">{{ system_email }}</a> for any questions.</h3>
         {% endif %}
     </footer>
 </div>

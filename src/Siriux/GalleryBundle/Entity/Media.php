@@ -27,6 +27,17 @@ class Media extends BaseMedia
     protected $id;
 
     /**
+     * @ORM\Column(type="string", length="30")
+     * 
+     */
+    protected $title;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Siriux\UserBundle\Entity\User")
+     */
+    protected $user;
+
+    /**
      * Get id
      *
      * @return integer $id
@@ -34,5 +45,25 @@ class Media extends BaseMedia
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user)
+    {
+        $this->user = $user;
     }
 }

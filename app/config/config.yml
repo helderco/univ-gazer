@@ -25,6 +25,7 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         system_email: %system_email%
+        form_theme: "SiriuxGazerBundle::form.html.twig"
 
 # Assetic Configuration
 assetic:
@@ -59,7 +60,7 @@ sonata_media:
     class:
         media:              Siriux\GalleryBundle\Entity\Media
         gallery:            Siriux\GalleryBundle\Entity\Gallery
-        gallery_has_media:  Siriux\GalleryBundle\Entity\GalleryHasMedia
+        gallery_has_media:  Siriux\GalleryBundle\Entity\Image
 
     default_context: default
 

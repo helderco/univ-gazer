@@ -11,13 +11,14 @@
 namespace Siriux\GalleryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Sonata\MediaBundle\Entity\BaseGalleryHasMedia as BaseGalleryHasMedia;
+use Sonata\MediaBundle\Entity\BaseGalleryHasMedia;
+use Siriux\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="gallery_media")
  */
-class GalleryHasMedia extends BaseGalleryHasMedia
+class Image extends BaseGalleryHasMedia
 {
     /**
      * @ORM\Id
@@ -25,6 +26,12 @@ class GalleryHasMedia extends BaseGalleryHasMedia
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    public function __construct()
+    {
+        $this->position = 0;
+        $this->enabled  = true;
+    }
 
     /**
      * Get id
