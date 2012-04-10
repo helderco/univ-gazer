@@ -11,6 +11,7 @@
 namespace Siriux\GalleryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Sonata\MediaBundle\Entity\BaseGalleryHasMedia;
 use Siriux\UserBundle\Entity\User;
 
@@ -26,6 +27,11 @@ class Image extends BaseGalleryHasMedia
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @Assert\NotBlank(message="Please choose a category.")
+     */
+    protected $gallery;
 
     public function __construct()
     {

@@ -57,7 +57,9 @@
                 {% block drop_side %}
                 <h6>{% block fos_user_header %}{% endblock fos_user_header %}</h6>
                 {% for key, message in app.session.getFlashes %}
-                    <div class="alert alert_{{key}}">{{ message|trans({}, 'FOSUserBundle') }}</div>
+                    {% if key != 'user' %}
+                        <div class="alert alert_{{key}}">{{ message|trans }}</div>
+                    {% endif %}
                 {% endfor %}
                 {% block fos_user_content %}{% endblock fos_user_content %}
                 {% endblock drop_side %}

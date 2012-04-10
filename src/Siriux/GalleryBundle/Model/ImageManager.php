@@ -9,35 +9,27 @@ use Sonata\MediaBundle\Model\GalleryHasMediaInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Siriux\GalleryBundle\Entity\Image;
+use Siriux\UserBundle\Entity\User;
 
 class ImageManager
 {
     protected $em;
-    protected $security;
     protected $repository;
     protected $galleryManager;
     protected $mediaManager;
 
     public function __construct(
             EntityManager $em,
-            SecurityContextInterface $security,
             GalleryManagerInterface $galleryManager,
             MediaManagerInterface $mediaManager)
     {
         $this->em = $em;
-        $this->security = $security;
         $this->galleryManager = $galleryManager;
         $this->mediaManager = $mediaManager;
     }
 
     public function save(Image $image)
     {
-        $user = $this->security->getToken()->getUser();
-
-        $image->getMeida()->setUser($user);
-        $image->getMedia()->setEnabled(true);
-        $image->getMedia()->setAuthorName($user->getName());
-
         $this->em->persist($image);
         $this->em->flush();
     }
@@ -70,6 +62,11 @@ class ImageManager
     public function findOneBy(array $criteria)
     {
         return $this->getRepository()->findOneBy($criteria);
+    }
+
+    public function findOneByMedia($media_id)
+    {
+        return $this->findOneBy(array('media_id' => $media_id));
     }
 
     /**

@@ -36,16 +36,28 @@ class DefaultController extends Controller
      */
     public function createAction()
     {
-        $form = $this->createForm(new ImageType(), new Image());
+        $image = $this->getImageManager()->create();
+        $form = $this->createForm(new ImageType(), $image);
         $form->bindRequest($this->getRequest());
 
-        $image = $form->getData();
-        $this->getImageManager()->save($image);
+        if ($form->isValid()) {
+            $this->getImageManager()->save($image);
+            $this->flash('New image added successfully.');
 
-        return $this->redirect($this->generateUrl("home"));
+            return $this->redirect($this->generateUrl('home'));
+        }
+
+        return array(
+            'form' => $form->createView(),
+        );
     }
 
-    public function getImageManager()
+    private function flash($msg)
+    {
+        $this->get('session')->setFlash('user', $msg);
+    }
+
+    private function getImageManager()
     {
         return $this->get('siriux.image.manager');
     }

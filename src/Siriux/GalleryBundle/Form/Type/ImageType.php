@@ -17,6 +17,13 @@ class ImageType extends AbstractType
         ;
     }
 
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'Siriux\GalleryBundle\Entity\Image',
+        );
+    }
+
     public function getName()
     {
         return 'siriux_image';

@@ -11,7 +11,9 @@
 namespace Siriux\GalleryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Sonata\MediaBundle\Entity\BaseMedia as BaseMedia;
+use Siriux\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity
@@ -29,13 +31,23 @@ class Media extends BaseMedia
     /**
      * @ORM\Column(type="string", length="30")
      * 
+     * @Assert\NotBlank(message="You must choose a title for this image.")
+     * @Assert\MinLength(limit="3", message="Title too short. Minimum is 3 characters.")
+     * @Assert\MaxLength(limit="30", message="Title too long. Maximum is 30 characters.")
      */
     protected $title;
 
     /**
      * @ORM\ManyToOne(targetEntity="Siriux\UserBundle\Entity\User")
+     *
+     * @Assert\NotBlank(message="Who are you?")
      */
     protected $user;
+
+    /**
+     * @Assert\NotBlank(message="Please upload an image.")
+     */
+    protected $binaryContent;
 
     /**
      * Get id
