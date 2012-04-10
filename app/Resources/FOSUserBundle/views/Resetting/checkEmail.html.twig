@@ -1,7 +1,7 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends standalone %}
 
-{% block fos_user_header %}{{ 'layout.reset_request'|trans({}, 'FOSUserBundle') }}{% endblock %}
+{% block fos_user_header %}{{ 'layout.reset_request'|trans }}{% endblock %}
 
 {% block fos_user_content %}
-    <p>{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}</p>
+    <p>{{ 'resetting.check_email'|trans({'%email%': email}) }}</p>
 {% endblock %}

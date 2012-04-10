@@ -1,10 +1,10 @@
-{% extends 'FOSUserBundle::form_errors.html.twig' %}
+{% extends form_errors %}
 
-{% block fos_user_header %}{{ 'layout.profile'|trans({}, 'FOSUserBundle') }}:{% endblock %}
+{% block fos_user_header %}{{ 'layout.profile'|trans }}:{% endblock %}
 
 {% block fos_user_content %}
 <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
     {{ form_widget(form) }}
-    <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }} &rarr;" class="dropsubmitbtn" />
+    <input type="submit" value="{{ 'profile.edit.submit'|trans }} &rarr;" class="dropsubmitbtn" />
 </form>
 {% endblock fos_user_content %}

@@ -1,4 +1,4 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends standalone %}
 
 {# We need to override some blocks because for this form, the errors must be output outside of it #}
 {% form_theme form theme _self %}
@@ -37,12 +37,12 @@
 
         {% for child2 in child %}
             {% for error in child2.vars.errors %}
-                {% set _errors = _errors|merge([child2.vars.id|trans({}, 'FOSUserBundle') ~ ': ' ~ error.messageTemplate|trans(error.messageParameters, 'validators')]) %}
+                {% set _errors = _errors|merge([child2.vars.id|trans ~ ': ' ~ error.messageTemplate|trans(error.messageParameters, 'validators')]) %}
             {% endfor %}
         {% endfor %}
 
         {% for error in child.vars.errors %}
-            {% set _errors = _errors|merge([child.vars.id|trans({}, 'FOSUserBundle') ~ ': ' ~ error.messageTemplate|trans(error.messageParameters, 'validators')]) %}
+            {% set _errors = _errors|merge([child.vars.id|trans ~ ': ' ~ error.messageTemplate|trans(error.messageParameters, 'validators')]) %}
         {% endfor %}
     {% endfor %}
 

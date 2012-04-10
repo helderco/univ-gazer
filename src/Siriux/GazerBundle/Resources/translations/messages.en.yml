@@ -98,3 +98,5 @@ fos_user_resetting_form_new_second: "Verification"
 fos_user_change_password_form_new_first: "New password"
 fos_user_change_password_form_new_second: "Verification"
 fos_user_change_password_form_current: "Current password"
+
+

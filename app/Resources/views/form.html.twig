@@ -1,7 +1,7 @@
 
 {% block field_label %}
 {% spaceless %}
-    <label for="{{ id }}">{{ id|trans([], 'FOSUserBundle') }}</label>
+    <label for="{{ id }}">{{ id|trans }}</label>
 {% endspaceless %}
 {% endblock field_label %}
 
@@ -27,13 +27,13 @@
 {% block field_widget %}
 {% spaceless %}
     {% set type = type|default('text') %}
-    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} placeholder="{{ id|trans([], 'FOSUserBundle') }}..." />
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} placeholder="{{ id|trans }}..." />
 {% endspaceless %}
 {% endblock field_widget %}
 
 {% block textarea_widget %}
 {% spaceless %}
-    <textarea {{ block('widget_attributes') }} placeholder="{{ id|trans([], 'FOSUserBundle') }}...">{{ value }}</textarea>
+    <textarea {{ block('widget_attributes') }} placeholder="{{ id|trans }}...">{{ value }}</textarea>
 {% endspaceless %}
 {% endblock textarea_widget %}
 

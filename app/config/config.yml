@@ -4,6 +4,7 @@ imports:
 
 parameters:
     system_email: "gazer@siriux.org"
+    form_theme: "::form.html.twig"
 
 framework:
     #esi:             ~
@@ -25,7 +26,9 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         system_email: %system_email%
-        form_theme: "SiriuxGazerBundle::form.html.twig"
+        theme: %form_theme%
+        form_errors: "::form_errors.html.twig"
+        standalone: "SiriuxGazerBundle:Default:index.html.twig"
 
 # Assetic Configuration
 assetic:
@@ -104,6 +107,8 @@ fos_user:
     firewall_name: main
     user_class: Siriux\UserBundle\Entity\User
     use_listener: false
+    template:
+      theme: %form_theme%
     from_email:
         address: %system_email%
         sender_name: Siriux Gazer
