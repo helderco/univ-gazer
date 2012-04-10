@@ -1,0 +1,61 @@
+{% extends 'SiriuxGalleryBundle:Admin:__section.html.twig' %}
+
+{% block subtitle %} List {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("form.trash_gallery").submit(function() {
+            return confirm("You are about to delete a category.\nIt cannot be restored at a later time! Continue?");
+        });
+        $('#add_new').click(function() {
+            window.location = "{{ path('admin_galleries_new') }}"
+        });
+    });
+    </script>
+{% endblock%}
+
+{% block body %}
+<article class="module width_full">
+    <header>
+        <h3>{{ block('section') }}</h3>
+    </header>
+
+    <table class="tablesorter" cellspacing="0">
+        <thead>
+            <tr>
+                <th style="text-align:center">ID</th>
+                <th>Name</th>
+                <th style="text-align:center">Enabled</th>
+                <th style="text-align:center">Created at</th>
+                <th style="text-align:center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for gallery in galleries %}
+            <tr>
+                <td style="text-align:center">{{ gallery.id }}</td>
+                <td>{{ gallery.name }}</td>
+                <td style="text-align:center">{% if gallery.enabled %} Yes {% else %} No {% endif %}</td>
+                <td style="text-align:center">{{ gallery.createdAt|date('Y-m-d H:i:s') }}</td>
+                <td style="text-align:center">
+                    <a href="{{ path('admin_gallery_edit', { 'id': gallery.id }) }}" title="Edit category"><img src="{{ asset('bundles/siriuxadmin/images/icn_edit.png') }}" alt="edit" /></a>
+                    <form action="{{ path("admin_gallery_delete", {'id': gallery.id}) }}" method="post" class="trash_gallery" style="display:inline;">
+                        {{ form_widget(delete_forms[gallery.id]._token) }}
+                        {{ form_widget(delete_forms[gallery.id].id) }}
+                        <input type="image" src="{{ asset('bundles/siriuxadmin/images/icn_trash.png') }}" class="trash_gallery" title="Delete category" />
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <footer>
+        <div class="submit_link">
+            <input id="add_new" type="submit" value="Add New" title="Add new category" class="alt_btn" />
+        </div>
+    </footer>
+</article>
+{% endblock %}

@@ -3,6 +3,10 @@ services:
         class: Siriux\GalleryBundle\Security\UserDownloadStrategy
         arguments: ["@security.context"]
 
+    siriux.gallery.manager:
+        class: Siriux\GalleryBundle\Model\GalleryManager
+        arguments: ["@sonata.media.entity_manager", Siriux\GalleryBundle\Entity\Gallery]
+
     siriux.image.manager:
         class: Siriux\GalleryBundle\Model\ImageManager
         arguments: ["@doctrine.orm.entity_manager", "@sonata.media.manager.gallery", "@sonata.media.manager.media"]
