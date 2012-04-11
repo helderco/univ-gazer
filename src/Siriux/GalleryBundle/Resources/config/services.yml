@@ -9,7 +9,7 @@ services:
 
     siriux.image.manager:
         class: Siriux\GalleryBundle\Model\ImageManager
-        arguments: ["@doctrine.orm.entity_manager", "@sonata.media.manager.gallery", "@sonata.media.manager.media"]
+        arguments: ["@doctrine.orm.entity_manager", "@security.context", "@sonata.media.manager.gallery", "@sonata.media.manager.media"]
 
     siriux.type.media:
         class: Siriux\GalleryBundle\Form\Type\MediaType

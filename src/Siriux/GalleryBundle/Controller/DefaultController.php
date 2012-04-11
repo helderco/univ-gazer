@@ -17,15 +17,19 @@ use Siriux\GalleryBundle\Form\Type\ImageType;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/new", name="photo_new")
-     * @Template
+     * @Route("/list")
+     * @Template()
      */
-    public function newAction()
+    public function indexAction()
     {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $images = $this->getImageManager()->findOwnedBy($user);
+
         $form = $this->createForm(new ImageType(), new Image());
 
         return array(
             'form' => $form->createView(),
+            'images' => $images,
         );
     }
 

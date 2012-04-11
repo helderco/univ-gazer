@@ -29,6 +29,6 @@ class DefaultController extends Controller
      */
     public function homeAction()
     {
-        return $this->forward('SiriuxGalleryBundle:Default:new');
+        return $this->forward('SiriuxGalleryBundle:Default:index');
     }
 }
