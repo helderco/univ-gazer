@@ -77,10 +77,6 @@
     git=http://github.com/Elao/WebProfilerExtraBundle.git
     target=bundles/Elao/WebProfilerExtraBundle
 
-[TinymceBundle]
-    git=git://github.com/stfalcon/TinymceBundle.git
-    target=/bundles/Stfalcon/Bundle/TinymceBundle
-
 [SonataMediaBundle]
     git=http://github.com/sonata-project/SonataMediaBundle.git
     target=/bundles/Sonata/MediaBundle
