@@ -31,21 +31,22 @@ class Media extends BaseMedia
     /**
      * @ORM\Column(type="string", length="30")
      * 
-     * @Assert\NotBlank(message="You must choose a title for this image.")
-     * @Assert\MinLength(limit="3", message="Title too short. Minimum is 3 characters.")
-     * @Assert\MaxLength(limit="30", message="Title too long. Maximum is 30 characters.")
+     * @Assert\NotBlank(message="You must choose a title for this image.", groups={"New", "Update"})
+     * @Assert\MinLength(limit="3", message="Title too short. Minimum is 3 characters.", groups={"New", "Update"})
+     * @Assert\MaxLength(limit="30", message="Title too long. Maximum is 30 characters.", groups={"New", "Update"})
      */
     protected $title;
 
     /**
      * @ORM\ManyToOne(targetEntity="Siriux\UserBundle\Entity\User")
      *
-     * @Assert\NotBlank(message="Who are you?")
+     * @Assert\NotBlank(message="Who are you?", groups={"New"})
      */
     protected $user;
 
     /**
-     * @Assert\NotBlank(message="Please upload an image.")
+     * @Assert\NotBlank(message="Please upload an image.", groups={"New"})
+     * @Assert\Image(maxSize="6M", groups={"New"})
      */
     protected $binaryContent;
 
@@ -77,5 +78,22 @@ class Media extends BaseMedia
     public function setUser(User $user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * Returns a human readable string from the file size.
+     *
+     * @return string
+     */
+    public function getHRSize()
+    {
+        $sizes = array('B', 'KB', 'MB', 'GB');
+        $len = $this->getSize();
+        $order = 0;
+        while ($len >= 1024 && $order + 1 < count($sizes)) {
+            $order++;
+            $len /= 1024;
+        }
+        return sprintf("%.2f %s", $len, $sizes[$order]);
     }
 }

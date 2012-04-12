@@ -2,6 +2,7 @@
 
 namespace Siriux\GalleryBundle\Controller;
 
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -34,9 +35,51 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/{id}/view/{format}",
+     *        requirements={"id" = "\d+"},
+     *        defaults={"format" = "reference"},
+     *        name="photo_show")
+     *
+     * @Template()
+     */
+    public function viewAction($id, $format)
+    {
+        $image = $this->getImage($id);
+        $form = $this->createForm(new ImageType('Update'), $image);
+
+        if ($format == 'reference' && $image->getMedia()->getWidth() > 940) {
+            $format = 'default_max';
+        }
+
+        return array(
+            'form' => $form->createView(),
+            'image' => $image,
+            'format' => $format,
+        );
+    }
+
+    /**
+     * @Route("/{id}/download/{format}",
+     *          requirements={"id" = "\d+"},
+     *          defaults={"format" = "reference"},
+     *          name="photo_download")
+     */
+    public function downloadAction($id, $format = 'reference')
+    {
+        $image = $this->getImage($id);
+        $media = $image->getMedia();
+
+        $pool = $this->get('sonata.media.pool');
+        $provider = $pool->getProvider($media->getProviderName());
+        $downloadMode = $pool->getDownloadMode($media);
+
+        return $provider->getDownloadResponse($media, $format, $downloadMode);
+    }
+
+    /**
      * @Route("/create", name="photo_create")
      * @Method("post")
-     * @Template
+     * @Template()
      */
     public function createAction()
     {
@@ -56,13 +99,71 @@ class DefaultController extends Controller
         );
     }
 
+    /**
+     * @Route("/{id}/update",
+     *        requirements={"id" = "\d+"},
+     *        name="photo_update")
+     *
+     * @Method("post")
+     * @Template()
+     */
+    public function updateAction($id)
+    {
+        $image = $this->getImage($id);
+
+        $imagePost = $this->getRequest()->get('siriux_image');
+        if (isset($imagePost['delete'])) {
+            $this->getImageManager()->delete($image);
+            $this->flash("Image with id $id deleted successfully.");
+
+            return $this->redirect($this->generateUrl('home'));
+        }
+
+        $form = $this->createForm(new ImageType('Update'), $image);
+        $form->bindRequest($this->getRequest());
+
+        if ($form->isValid()) {
+            $this->getImageManager()->save($image);
+            $this->flash('Image updated successfully.');
+
+            return $this->redirect($this->generateUrl('photo_show', array('id' => $id)));
+        }
+
+        return array(
+            'image' => $image,
+            'form' => $form->createView(),
+        );
+    }
+
     private function flash($msg)
     {
         $this->get('session')->setFlash('user', $msg);
     }
 
+    private function getImage($media_id)
+    {
+        $image = $this->getImageManager()->findOneBy(array('media' => $media_id));
+
+        if (!$image || !$image->getMedia()) {
+            throw $this->createNotFoundException("Unknown image with the id $media_id!");
+        }
+
+        if (!$this->isGranted($image->getMedia())) {
+            throw new AccessDeniedHttpException();
+        }
+
+        return $image;
+    }
+
     private function getImageManager()
     {
         return $this->get('siriux.image.manager');
+    }
+
+    private function isGranted(Media $media)
+    {
+        return $this->get('sonata.media.pool')
+                    ->getDownloadSecurity($media)
+                    ->isGranted($media, $this->getRequest());
     }
 }

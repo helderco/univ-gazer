@@ -1,0 +1,10 @@
+{% extends form_errors %}
+
+{% block fos_user_header %}Update photo information:{% endblock %}
+
+{% block fos_user_content %}
+<form action="{{ path('photo_update', {'id': image.media.id}) }}" {{ form_enctype(form) }} method="POST">
+    {{ form_widget(form) }}
+    <input type="submit" value="Update &rarr;" class="dropsubmitbtn" /> <a href="{{ path("photo_show", {"id": image.media.id}) }}">&larr; Cancel</a>
+</form>
+{% endblock %}

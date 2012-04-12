@@ -47,7 +47,7 @@ class ImageManager
     protected function getRepository()
     {
         if (!$this->repository) {
-            $this->repository = $this->em->getRepository(Image);
+            $this->repository = $this->em->getRepository('Siriux\GalleryBundle\Entity\Image');
         }
 
         return $this->repository;
@@ -76,7 +76,7 @@ class ImageManager
 
     public function findOneByMedia($media_id)
     {
-        return $this->findOneBy(array('media_id' => $media_id));
+        return $this->findOneBy(array('media' => $media_id));
     }
 
     /**
@@ -115,6 +115,7 @@ class ImageManager
      */
     public function delete(Image $image)
     {
+        $this->em->remove($image->getMedia());
         $this->em->remove($image);
         $this->em->flush();
     }

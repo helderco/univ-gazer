@@ -75,8 +75,9 @@ sonata_media:
                 - sonata.media.provider.image
 
             formats:
-                small: { width: 214, height: 144, quality: 70}
+                small: { width: 210, height: 140, quality: 70}
                 big:   { width: 600, quality: 70}
+                max:   { width: 940 }
 
     cdn:
         server:

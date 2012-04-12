@@ -8,6 +8,13 @@ use Doctrine\ORM\EntityRepository;
 
 class ImageType extends AbstractType
 {
+    private $validation;
+
+    public function __construct($validation = 'New')
+    {
+        $this->validation = $validation;
+    }
+
     public function buildForm(FormBuilder $builder, array $options)
     {
         $enabledGalleries = function(EntityRepository $er) {
@@ -15,13 +22,20 @@ class ImageType extends AbstractType
                                     ->where('g.enabled = 1');
         };
 
-        $builder
-            ->add('gallery', 'entity', array(
-                'class' => 'SiriuxGalleryBundle:Gallery',
-                'empty_value' => '-- Choose a category --',
-                'query_builder' => $enabledGalleries))
-            ->add('media', 'siriux_media_type')
-        ;
+        $builder->add('gallery', 'entity', array(
+            'class' => 'SiriuxGalleryBundle:Gallery',
+            'empty_value' => '-- Choose a category --',
+            'query_builder' => $enabledGalleries));
+
+        $builder->add('media', 'siriux_media_type', array(
+            'validation_groups' => array($this->validation)));
+
+        if ($this->validation == 'Update') {
+            $builder->add('delete', 'checkbox', array(
+                'label' => 'Delete photo?',
+                'property_path' => false,
+            ));
+        }
     }
 
     public function getDefaultOptions(array $options)

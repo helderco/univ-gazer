@@ -33,9 +33,14 @@ class MediaType extends AbstractType
         $builder
             ->add('title')
             ->add('description', 'textarea', array('required' => false))
-            ->add('binaryContent', 'file')
-            ->addEventSubscriber(new AddUserFieldSubscriber($this->user))
         ;
+
+        if (in_array('New', $options['validation_groups'])) {
+            $builder
+                ->add('binaryContent', 'file')
+                ->addEventSubscriber(new AddUserFieldSubscriber($this->user))
+            ;
+        }
     }
 
     public function getDefaultOptions(array $options)
@@ -44,6 +49,7 @@ class MediaType extends AbstractType
             'data_class' => 'Siriux\GalleryBundle\Entity\Media',
             'provider' => null,
             'context' => null,
+            'validation_groups' => array('Update'),
         );
     }
 

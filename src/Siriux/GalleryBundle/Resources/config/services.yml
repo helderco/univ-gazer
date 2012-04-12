@@ -1,3 +1,6 @@
+parameters:
+  sonata.media.provider.image.class: "Siriux\GalleryBundle\Model\ImageProvider"
+
 services:
     siriux.gallery.security.user_strategy:
         class: Siriux\GalleryBundle\Security\UserDownloadStrategy

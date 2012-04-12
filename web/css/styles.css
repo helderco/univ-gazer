@@ -389,6 +389,10 @@ img.logo {
 
 /**** HEADER ****/
 
+#main {
+    position: relative;
+}
+
 .subtitle {
 	font-size: 12px;
 	color: #b4b7bc;
@@ -399,6 +403,14 @@ img.logo {
 	margin-top: 10px;
 	text-shadow: 0px 1px 0px #000000;
 	filter: dropshadow(color=#00000, offx=0, offy=1);
+}
+
+#main .alert {
+    position: absolute;
+    right: 0px;
+    top: 50px;
+    color: #CCC;
+    max-width: 600px;
 }
 
 /*** QUICKSAND ***/
@@ -437,7 +449,6 @@ img.logo {
 
 .portfoliocontainer {
 	width:1052px;
-	height: 695px;
 	overflow: hidden;
 	display: block;
 	float: left;
@@ -495,7 +506,7 @@ img.logo {
 	color: #343434;
 	text-shadow: 0px 1px 0px #FFFFFF;
 	filter: dropshadow(color=#FFFFFF, offx=0, offy=1);
-	float: left;
+	/*float: left;*/
 	margin-top: 19px;
 	margin-left: 9px;
 }
@@ -504,11 +515,47 @@ img.logo {
 	color: #343434;
 	text-shadow: 0px 1px 0px rgba(255,255,255,.5);
 	filter: dropshadow(color=rgba(255,255,255,.5), offx=0, offy=1);
-	float: left;
+	/*float: left;*/
 	margin-top: 4px;
 	margin-left: 9px;
 }
 
+.photoview_container {
+	width:940px;
+	overflow: hidden;
+	display: block;
+	margin: 40px auto;
+    text-align: center;
+    color: #B4B7BC;
+    font-size: 12px;
+}
+
+.photoview_container h1 {
+    font-size: 33px;
+    margin: 24px;
+    color: #ddd;
+	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
+	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
+}
+
+.photoview_container p.description {
+    margin-top: 33px;
+    font-style: italic;
+}
+
+.photoview_container dl {
+    margin-top: 33px;
+}
+
+.photoview_container dt {
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.photoview_container dd {
+    margin-bottom: 18px;
+}
 
 /*** FOOTER ***/
 

@@ -39,8 +39,7 @@ class UserDownloadStrategy implements DownloadStrategyInterface
             return true;
         }
 
-        // @todo: check if the authenticated user is the owner of this media
-        return true;
+        return $this->security->getToken()->getUser()->isUser($media->getUser());
     }
 }
 

@@ -28,7 +28,7 @@ class AddUserFieldSubscriber implements EventSubscriberInterface
     {
         $data = $event->getData();
 
-        // check if the media object is "new"
+        // check if the media object is "new", to associate it with the current user
         if (!$data->getId()) {
             $data->setUser($this->user);
             $data->setAuthorName($this->user->getName());

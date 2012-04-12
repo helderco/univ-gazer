@@ -1,0 +1,55 @@
+{% extends 'SiriuxGazerBundle:Default:home.html.twig' %}
+
+{% block fos_user_header %}Update photo information:{% endblock %}
+
+{% block fos_user_content %}
+{% form_theme form theme %}
+<form action="{{ path('photo_update', {'id': image.media.id}) }}" {{ form_enctype(form) }} method="POST">
+    {{ form_widget(form) }}
+    <input type="submit" value="Update &rarr;" class="dropsubmitbtn" />
+</form>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".dropbtn").click(function(){
+                $("#dropdown").slideToggle("slow");
+                $(this).toggleClass("active");
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block nav %}
+<nav id="filter">
+    <a href="{{ path('home') }}">Go back to gallery</a>
+    <a href="{{ path('photo_download', {'id': image.media.id }) }}">Download original</a>
+</nav>
+{% endblock %}
+
+
+{% block body %}
+    <div class="portfolioseperator"></div>
+    <div class="photoview_container">
+        <h1>{{ image.media.title }}</h1>
+        <a href="{% path image.media, 'reference' %}" title="View original image.">{% media image.media, format %}</a>
+
+        {% if image.media.description %}
+        <p class="description">{{ image.media.description }}</p>
+        {% endif %}
+
+        <dl>
+            <dt>Category</dt>
+            <dd>{{ image.gallery.name }}</dd>
+            <dt>Name</dt>
+            <dd>{{ image.media.name }}</dd>
+            <dt>Dimensions</dt>
+            <dd>{{ image.media.width }} x {{ image.media.height }}</dd>
+            <dt>Size</dt>
+            <dd>{{ image.media.hrsize }}</dd>
+            <dt>Uploaded at</dt>
+            <dd>{{ image.media.createdAt|date("F jS Y, g:ia") }}</dd>
+        </dl>
+    </div>
+{% endblock %}

@@ -29,7 +29,7 @@
                 <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans }}</a></li>
                 <li><a href="{{ path('fos_user_change_password') }}">{{ 'change_password.submit'|trans }}</a></li>
                 <li><a href="{{ path('fos_user_profile_edit') }}">{{ 'layout.profile'|trans }}</a></li>
-                <li><a href="{{ path('home') }}">Home</a></li>
+                <li><a href="{{ path('home') }}">Gallery</a></li>
             {% else %}
                 <li><a href="{{ path('fos_user_resetting_request') }}">{{ 'layout.reset'|trans }}</a></li>
                 <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans }}</a></li>
@@ -71,8 +71,12 @@
     {% block drop_btn %}<span class="dropbtn"></span>{% endblock %}
 </div>
 
-<div class="container">
+<div id="main" class="container">
     {% block promo2 %}{{ block('promo') }}{% endblock %}
+    {% for key, message in app.session.getFlashes %}
+        <div class="alert alert_{{key}}">{{ message|trans }}</div>
+    {% endfor %}
+    {% block nav %}{% endblock %}
     {% block body %}{% endblock %}
     {% block footer_sep %}<div class="footerseperator"></div>{% endblock %}
     <footer>

@@ -30,7 +30,7 @@
         <ul id="stage">
             {% for image in images %}
             <li data-tags="{{ image.gallery.name }}">
-                <a href="#"><span class="portfoliohover"><h1 class="porthover1">{{ image.media.title }}</h1><h1 class="porthover2">{{ image.media.description }}</h1></span>{% thumbnail image.media, 'small' %}</a>
+                <a href="{{ path('photo_show', {'id': image.media.id }) }}"><div class="portfoliohover"><h1 class="porthover1">{{ image.media.title }}</h1><h1 class="porthover2">Dimensions: {{ image.media.width }}x{{ image.media.height }} ({{ image.media.hrsize }})</h1></div>{% thumbnail image.media, 'small' %}</a>
             </li>
             {% endfor %}
         </ul>
