@@ -65,6 +65,13 @@ class GalleryManager extends BaseManager
         return $this->getRepository()->findOneBy(array('id' => $id));
     }
 
+    public function getPhotosCount(GalleryInterface $gallery)
+    {
+        $images = $this->im->findBy(array('gallery' => $gallery->getId()));
+
+        return count($images);
+    }
+
     /**
      * Deletes a gallery
      *

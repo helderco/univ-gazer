@@ -32,14 +32,17 @@ class GalleryController extends Controller
     {
         $galleries = $this->getGalleryManager()->findAll();
 
+        $photos_count = array();
         $delete_forms = array();
 
         foreach ($galleries as $gallery) {
+            $photos_count[$gallery->getId()] = $this->getGalleryManager()->getPhotosCount($gallery);
             $delete_forms[$gallery->getId()] = $this->createDeleteForm($gallery->getId())->createView();
         }
 
         return array(
             'galleries' => $galleries,
+            'photos_count' => $photos_count,
             'delete_forms' => $delete_forms,
         );
     }

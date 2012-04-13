@@ -5,6 +5,7 @@
             <th>Name</th>
             <th>Username</th>
             <th>Email</th>
+            <th style="text-align:center">Photos</th>
             <th style="text-align:center">Enabled</th>
             <th style="text-align:center">Last Login</th>
             <th style="text-align:center">Actions</th>
@@ -17,6 +18,7 @@
             <td>{{ user.name }}</td>
             <td><a href="{{ path('users_edit', { 'id': user.id }) }}" title="Edit user">{{ user.username }}</a></td>
             <td>{{ user.email }}</td>
+            <td style="text-align:center"><a href="{{ path('admin_user_photos', {'id': user.id}) }}" title="View photos from this user">{{ photos_count[user.id] }}</a></td>
             <td style="text-align:center">{% if user.enabled %} Yes {% else %} No {% endif %}</td>
             <td style="text-align:center">{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
             <td style="text-align:center">

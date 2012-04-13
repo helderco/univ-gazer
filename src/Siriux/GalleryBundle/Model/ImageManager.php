@@ -72,6 +72,34 @@ class ImageManager
         return new Image();
     }
 
+    public function find($id)
+    {
+        return $this->findOneBy(array('id' => $id));
+    }
+
+    /**
+     * Finds images by the given criteria
+     *
+     * @param array $criteria
+     * @return array
+     */
+    public function findBy(array $criteria, $orderBy = array(), $limit = null)
+    {
+        return $this->getRepository()->findBy($criteria, $orderBy, $limit);
+    }
+
+    public function findAll()
+    {
+        return $this->findMany(null);
+    }
+
+    public function findMany($limit)
+    {
+        $orderBy = array('createdAt' => 'DESC');
+
+        return $this->findBy(array(), $orderBy, $limit);
+    }
+
     /**
      * Finds one image by the given criteria
      *
@@ -86,17 +114,6 @@ class ImageManager
     public function findOneByMedia($media_id)
     {
         return $this->findOneBy(array('media' => $media_id));
-    }
-
-    /**
-     * Finds images by the given criteria
-     *
-     * @param array $criteria
-     * @return array
-     */
-    public function findBy(array $criteria)
-    {
-        return $this->getRepository()->findBy($criteria);
     }
 
     public function findOwnedBy(User $user)

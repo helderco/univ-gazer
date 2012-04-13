@@ -27,6 +27,7 @@
             <tr>
                 <th style="text-align:center">ID</th>
                 <th>Name</th>
+                <th style="text-align:center">Photos</th>
                 <th style="text-align:center">Enabled</th>
                 <th style="text-align:center">Created at</th>
                 <th style="text-align:center">Actions</th>
@@ -37,6 +38,7 @@
             <tr>
                 <td style="text-align:center">{{ gallery.id }}</td>
                 <td>{{ gallery.name }}</td>
+                <td style="text-align:center"><a href="{{ path('admin_gallery_photos', {'id': gallery.id}) }}" title="View photos in this gallery">{{ photos_count[gallery.id] }}</a></td>
                 <td style="text-align:center">{% if gallery.enabled %} Yes {% else %} No {% endif %}</td>
                 <td style="text-align:center">{{ gallery.createdAt|date('Y-m-d H:i:s') }}</td>
                 <td style="text-align:center">

@@ -1,0 +1,11 @@
+{% extends 'SiriuxAdminBundle::layout.html.twig' %}
+
+{% block title %}Photos: {{ block('subtitle') }} | {{ parent() }} {% endblock %}
+
+{% block section %}Photos{% endblock %}
+
+{% block breadcrumb %}
+    <a href="{{ path('admin_photos') }}">{{ block('section') }}</a>
+    <div class="breadcrumb_divider"></div>
+    <a class="current">{{ block('subtitle') }}</a>
+{% endblock %}

@@ -35,10 +35,12 @@ class AdminController extends Controller
     public function indexAction()
     {
         $users = $this->getUserManager()->findUsers();
+        $photos = $this->get('sonata.media.manager.media')->findBy(array());
         
         $users_list = array();
         $admins_list = array();
         $delete_forms = array();
+        $photos_count = array();
         
         foreach ($users as $user) {
             if ($user->hasRole('ROLE_ADMIN') || $user->isSuperAdmin()) {
@@ -47,11 +49,17 @@ class AdminController extends Controller
                 array_push($users_list, $user);
             }
             $delete_forms[$user->getId()] = $this->createDeleteForm($user->getId())->createView();
+            $photos_count[$user->getId()] = 0;
+        }
+
+        foreach ($photos as $photo) {
+            $photos_count[$photo->getUser()->getId()]++;
         }
 
         return array(
             'users'  => $users_list,
             'admins' => $admins_list,
+            'photos_count' => $photos_count,
             'delete_forms' => $delete_forms,
         );
     }
