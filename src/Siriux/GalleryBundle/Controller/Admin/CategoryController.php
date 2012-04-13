@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Siriux\GalleryBundle\Controller;
+namespace Siriux\GalleryBundle\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -22,7 +22,7 @@ use Siriux\GalleryBundle\Entity\Gallery;
 /**
  * @Route("/admin/categories")
  */
-class AdminController extends Controller
+class CategoryController extends Controller
 {
     /**
      * @Route("", name="admin_galleries")
