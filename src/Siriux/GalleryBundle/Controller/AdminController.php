@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Siriux\GalleryBundle\Entity\Gallery;
 
 /**
- * @Route("/admin/galleries")
+ * @Route("/admin/categories")
  */
 class AdminController extends Controller
 {
