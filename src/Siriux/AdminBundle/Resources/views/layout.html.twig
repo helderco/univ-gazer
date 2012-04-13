@@ -55,11 +55,11 @@
 	<section id="secondary_bar">
             <div class="user">
                 <p>
-                    {% if app.user.name %} {{ app.user.name }} (<a href="{{ path("admin_user_profile") }}">{{ app.user.username }}</a>)
+                    {% if app.user.name %} {{ app.user.name }} (<a href="{{ path("admin_user_profile") }}" title="Go to profile">{{ app.user.username }}</a>)
                     {% else %} {{ app.user.username }}
                     {% endif %}
                 </p>
-                <!-- <a class="logout_user" href="#" title="Logout">Logout</a> -->
+                <a class="logout_user" href="{{ path('fos_user_security_logout') }}" title="Logout">Logout</a>
             </div>
             <div class="breadcrumbs_container">
                 <article class="breadcrumbs">
