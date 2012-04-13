@@ -33,7 +33,7 @@ class ImageType extends AbstractType
 
         $builder->add('gallery', 'entity', array(
             'class' => 'SiriuxGalleryBundle:Gallery',
-            'empty_value' => '-- Choose a category --',
+            'empty_value' => '-- Choose a gallery --',
             'query_builder' => $enabledGalleries));
 
         $builder->add('media', 'siriux_media_type', array(

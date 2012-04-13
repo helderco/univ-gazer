@@ -30,7 +30,7 @@ class Image extends BaseGalleryHasMedia
     protected $id;
 
     /**
-     * @Assert\NotBlank(message="Please choose a category.")
+     * @Assert\NotBlank(message="Please choose a gallery.")
      */
     protected $gallery;
 

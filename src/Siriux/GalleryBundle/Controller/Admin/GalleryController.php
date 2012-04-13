@@ -20,9 +20,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Siriux\GalleryBundle\Entity\Gallery;
 
 /**
- * @Route("/admin/categories")
+ * @Route("/admin/galleries")
  */
-class CategoryController extends Controller
+class GalleryController extends Controller
 {
     /**
      * @Route("", name="admin_galleries")
@@ -59,7 +59,7 @@ class CategoryController extends Controller
             if ($form->isValid()) {
                 $this->getGalleryManager()->update($gallery);
                 $this->get('session')->setFlash('success',
-                        sprintf('A new category with id %d was created successfully', $gallery->getId()));
+                        sprintf('A new gallery with id %d was created successfully', $gallery->getId()));
 
                 return $this->redirect($this->generateUrl('admin_galleries'));
             }
@@ -80,7 +80,7 @@ class CategoryController extends Controller
         $gallery = $this->getGalleryManager()->find($id);
 
         if (!$gallery) {
-            return $this->createNotFoundException("Could not found category with id $id.");
+            return $this->createNotFoundException("Could not find gallery with id $id.");
         }
 
         $name = $gallery->getName();
@@ -91,7 +91,7 @@ class CategoryController extends Controller
 
             if ($editForm->isValid()) {
                 $this->getGalleryManager()->update($gallery);
-                $msg = "Your changes to category `$name` were saved!";
+                $msg = "Your changes to gallery `$name` were saved!";
 
                 if ($name != $gallery->getName()) {
                     $msg .= sprintf(" It is now named `%s`.", $gallery->getName());
@@ -125,7 +125,7 @@ class CategoryController extends Controller
 
             if ($gallery !== null) {
                 $this->getGalleryManager()->delete($gallery);
-                $this->flash('success', sprintf("Category `%s` was deleted.", $gallery->getName()));
+                $this->flash('success', sprintf("Gallery `%s` was deleted.", $gallery->getName()));
             }
             else {
                 $this->flash('error', "Something went wrong! Could not find gallery with id $id.");

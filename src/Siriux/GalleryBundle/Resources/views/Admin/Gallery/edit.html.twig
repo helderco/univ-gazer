@@ -1,4 +1,4 @@
-{% extends 'SiriuxGalleryBundle:Admin:__section.html.twig' %}
+{% extends 'SiriuxGalleryBundle:Admin/Gallery:__section.html.twig' %}
 
 {% form_theme edit_form 'SiriuxAdminBundle:Form:fields.html.twig' %}
 
@@ -17,7 +17,7 @@
             }
         });
         $(":submit[name=delete]").click(function() {
-            if (confirm("You are about to delete a category and all related photos.\nIt cannot be restored at a later time! Continue?")) {
+            if (confirm("You are about to delete a gallery and all related photos.\nThey cannot be restored at a later time! Continue?")) {
                 $("#gallery_delete_form").submit();
             }
         });
@@ -27,7 +27,7 @@
 
 {% block body %}
 <article class="module width_full">
-    <header><h3>Update Category</h3></header>
+    <header><h3>Update Gallery</h3></header>
     <div class="module_content">
         <form id="gallery_update_form" action="{{ path('admin_gallery_edit', { 'id': gallery.id }) }}" method="post">
             {{ form_widget(edit_form) }}

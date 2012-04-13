@@ -1,4 +1,4 @@
-{% extends 'SiriuxGalleryBundle:Admin:__section.html.twig' %}
+{% extends 'SiriuxGalleryBundle:Admin/Gallery:__section.html.twig' %}
 
 {% block subtitle %} List {% endblock %}
 
@@ -7,7 +7,7 @@
     <script type="text/javascript">
     $(document).ready(function() {
         $("form.trash_gallery").submit(function() {
-            return confirm("You are about to delete a category and all related photos.\nIt cannot be restored at a later time! Continue?");
+            return confirm("You are about to delete a gallery and all related photos.\nThey cannot be restored at a later time! Continue?");
         });
         $('#add_new').click(function() {
             window.location = "{{ path('admin_galleries_new') }}"
@@ -40,11 +40,11 @@
                 <td style="text-align:center">{% if gallery.enabled %} Yes {% else %} No {% endif %}</td>
                 <td style="text-align:center">{{ gallery.createdAt|date('Y-m-d H:i:s') }}</td>
                 <td style="text-align:center">
-                    <a href="{{ path('admin_gallery_edit', { 'id': gallery.id }) }}" title="Edit category"><img src="{{ asset('bundles/siriuxadmin/images/icn_edit.png') }}" alt="edit" /></a>
+                    <a href="{{ path('admin_gallery_edit', { 'id': gallery.id }) }}" title="Edit gallery"><img src="{{ asset('bundles/siriuxadmin/images/icn_edit.png') }}" alt="edit" /></a>
                     <form action="{{ path("admin_gallery_delete", {'id': gallery.id}) }}" method="post" class="trash_gallery" style="display:inline;">
                         {{ form_widget(delete_forms[gallery.id]._token) }}
                         {{ form_widget(delete_forms[gallery.id].id) }}
-                        <input type="image" src="{{ asset('bundles/siriuxadmin/images/icn_trash.png') }}" class="trash_gallery" title="Delete category" />
+                        <input type="image" src="{{ asset('bundles/siriuxadmin/images/icn_trash.png') }}" class="trash_gallery" title="Delete gallery" />
                     </form>
                 </td>
             </tr>
@@ -54,7 +54,7 @@
 
     <footer>
         <div class="submit_link">
-            <input id="add_new" type="submit" value="Add New" title="Add new category" class="alt_btn" />
+            <input id="add_new" type="submit" value="Add New" title="Add new gallery" class="alt_btn" />
         </div>
     </footer>
 </article>
