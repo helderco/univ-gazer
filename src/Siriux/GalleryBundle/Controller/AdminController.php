@@ -91,7 +91,12 @@ class AdminController extends Controller
 
             if ($editForm->isValid()) {
                 $this->getGalleryManager()->update($gallery);
-                $this->flash('success', "Your changes to category `$name` were saved!");
+                $msg = "Your changes to category `$name` were saved!";
+
+                if ($name != $gallery->getName()) {
+                    $msg .= sprintf(" It is now named `%s`.", $gallery->getName());
+                }
+                $this->flash('success', $msg);
 
                 return $this->redirect($this->generateUrl('admin_galleries'));
             }
