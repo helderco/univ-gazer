@@ -12,10 +12,23 @@
 namespace Siriux\GalleryBundle\Model;
 
 use Sonata\MediaBundle\Entity\GalleryManager as BaseManager;
+use Sonata\MediaBundle\Model\GalleryInterface;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Siriux\GalleryBundle\Entity\Gallery;
+use Siriux\GalleryBundle\Model\ImageManager;
 
 class GalleryManager extends BaseManager
 {
+    protected $im;
+
+    public function __construct(EntityManager $em, $class, ImageManager $im)
+    {
+        $this->im = $im;
+
+        parent::__construct($em, $class);
+    }
+
     /**
      * Creates a new empty Gallery with default values
      * 
@@ -50,5 +63,17 @@ class GalleryManager extends BaseManager
     public function find($id)
     {
         return $this->getRepository()->findOneBy(array('id' => $id));
+    }
+
+    /**
+     * Deletes a gallery
+     *
+     * @param Gallery $gallery
+     * @return void
+     */
+    public function delete(GalleryInterface $gallery)
+    {
+        $this->im->batchRemove($gallery);
+        parent::delete($gallery);
     }
 }

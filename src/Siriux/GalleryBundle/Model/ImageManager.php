@@ -124,8 +124,21 @@ class ImageManager
      */
     public function delete(Image $image)
     {
+        $this->remove($image);
+        $this->em->flush();
+    }
+
+    protected function remove(Image $image)
+    {
         $this->em->remove($image->getMedia());
         $this->em->remove($image);
-        $this->em->flush();
+    }
+
+    public function batchRemove(Gallery $gallery)
+    {
+        $images = $this->findBy(array('gallery' => $gallery->getId()));
+        foreach ($images as $image) {
+            $this->remove($image);
+        }
     }
 }

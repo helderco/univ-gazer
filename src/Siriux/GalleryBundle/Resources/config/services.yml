@@ -8,7 +8,7 @@ services:
 
     siriux.gallery.manager:
         class: Siriux\GalleryBundle\Model\GalleryManager
-        arguments: ["@sonata.media.entity_manager", Siriux\GalleryBundle\Entity\Gallery]
+        arguments: ["@sonata.media.entity_manager", Siriux\GalleryBundle\Entity\Gallery, "@siriux.image.manager"]
 
     siriux.image.manager:
         class: Siriux\GalleryBundle\Model\ImageManager

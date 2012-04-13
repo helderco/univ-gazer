@@ -7,7 +7,7 @@
     <script type="text/javascript">
     $(document).ready(function() {
         $("form.trash_gallery").submit(function() {
-            return confirm("You are about to delete a category.\nIt cannot be restored at a later time! Continue?");
+            return confirm("You are about to delete a category and all related photos.\nIt cannot be restored at a later time! Continue?");
         });
         $('#add_new').click(function() {
             window.location = "{{ path('admin_galleries_new') }}"
