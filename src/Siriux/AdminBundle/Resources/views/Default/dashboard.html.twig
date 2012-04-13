@@ -2,6 +2,31 @@
 
 {% block title %} Dashboard | {{ parent() }} {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('#view_photos').click(function() {
+            window.location = "{{ path('admin_photos') }}"
+        });
+    });
+    </script>
+{% endblock%}
+
+
 {% block body %}
-    <h4 class="alert_info">This is the backend for the Gazer Gallery application.</h4>
+<h4 class="alert_info">Welcome to the backend of the Gazer Gallery application.</h4>
+
+<article class="module width_full">
+    <header>
+        <h3>{{ images|length }} latest photos</h3>
+    </header>
+    {% include 'SiriuxGalleryBundle:Admin/Photos:__list.html.twig' %}
+
+    <footer>
+        <div class="submit_link">
+            <input id="view_photos" type="submit" value="View all photos" title="View all photos" />
+        </div>
+    </footer>
+</article>
 {% endblock %}

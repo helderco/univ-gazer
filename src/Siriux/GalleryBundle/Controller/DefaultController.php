@@ -60,10 +60,16 @@ class DefaultController extends Controller
             $format = 'default_max';
         }
 
+        $user = $image->getMedia()->getUser();
+        $authUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $user->isUser($authUser);
+
         return array(
             'form' => $form->createView(),
             'image' => $image,
             'format' => $format,
+            'user' => $user,
+            'is_current_user' => $currentUser,
         );
     }
 

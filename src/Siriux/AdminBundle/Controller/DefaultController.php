@@ -34,7 +34,9 @@ class DefaultController extends Controller
      */
     public function dashboardAction()
     {
-        return array();
+        return array(
+            'images' => $this->get('siriux.image.manager')->findMany(5),
+        );
     }
 
     /**

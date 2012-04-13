@@ -1,22 +1,16 @@
-{% extends 'SiriuxGalleryBundle:Admin/Photos:__section.html.twig' %}
+{% extends 'SiriuxGalleryBundle:Admin/Photos:_list.html.twig' %}
 
 {% block subtitle %}{{ user.username }}'s gallery{% endblock %}
 
-{% block breadcrumb %}
-    <a href="{{ path('admin_photos') }}">{{ block('section') }}</a>
-    <div class="breadcrumb_divider"></div>
+{% block breadcrumb_section %}
     <a href="{{ path('admin_user_photos', {'id': user.id }) }}">{{ block('subtitle') }}</a>
     <div class="breadcrumb_divider"></div>
-    <a class="current">List</a>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
     $(document).ready(function() {
-        $("form.trash_photo").submit(function() {
-            return confirm("You are about to delete a user photo.\nIt cannot be restored at a later time! Continue?");
-        });
         $('#edit_user').click(function() {
             window.location = "{{ path('users_edit', {'id': user.id}) }}"
         });
@@ -29,45 +23,7 @@
     <header>
         <h3>{{ block('section') }} from user {{ user.username }}</h3>
     </header>
-
-    <table class="tablesorter" cellspacing="0">
-        <thead>
-            <tr>
-                <th style="text-align:center"></th>
-                <th>Title</th>
-                <th style="text-align:center">Gallery</th>
-                <th style="text-align:center">Type</th>
-                <th style="text-align:center">Dimensions</th>
-                <th style="text-align:center">Size</th>
-                <th style="text-align:center">Created at</th>
-                <th style="text-align:center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for image in images %}
-            <tr>
-                <td style="text-align:center"><a href="{{ path('photo_show', {'id': image.media.id}) }}">{% thumbnail image.media, 'tiny' %}</a></td>
-                <td>{{ image.media.title }}</td>
-                <td style="text-align:center"><a href="{{ path('admin_gallery_photos', {'id': image.gallery.id}) }}" title="View this gallery's photos">{{ image.gallery.name }}</a></td>
-                <td style="text-align:center">{{ image.media.contentType }}</td>
-                <td style="text-align:center">{{ image.media.width }}x{{ image.media.height }}</td>
-                <td style="text-align:center">{{ image.media.hrsize }}</td>
-                <td style="text-align:center">{{ image.createdAt|date('Y-m-d H:i:s') }}</td>
-                <td style="text-align:center">
-                    <form action="{{ path("admin_photo_delete", {'id': image.media.id}) }}" method="post" class="trash_photo" style="display:inline;">
-                        {{ form_widget(delete_forms[image.id]._token) }}
-                        {{ form_widget(delete_forms[image.id].id) }}
-                        <input type="image" src="{{ asset('bundles/siriuxadmin/images/icn_trash.png') }}" class="trash_photo" title="Delete photo" />
-                    </form>
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="8" style="text-align:center"><em>This user has no photos</em></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    {% include 'SiriuxGalleryBundle:Admin/Photos:__list.html.twig' %}
 
     <footer>
         <div class="submit_link">

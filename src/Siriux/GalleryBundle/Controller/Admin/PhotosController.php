@@ -86,14 +86,10 @@ class PhotosController extends Controller
      */
     public function deleteAction($id)
     {
-        $image = $this->getImageManager()->findOneByMedia($id);
-
-        if (!$image) {
-            throw $this->createNotFoundException("Unable to find photo with id $id.");
-        }
-
+        $image = $this->getImage($id);
         $title = $image->getMedia()->getTitle();
         $this->getImageManager()->delete($image);
+
         $this->get('session')->setFlash('success', "Photo with id $id ($title) was deleted successfully.");
 
         return $this->redirect($this->generateUrl('admin_photos'));
@@ -132,6 +128,17 @@ class PhotosController extends Controller
         }
 
         return $gallery;
+    }
+
+    private function getImage($id)
+    {
+        $image = $this->getImageManager()->findOneByMedia($id);
+
+        if (!$image) {
+            throw $this->createNotFoundException("Unable to find photo with id $id.");
+        }
+
+        return $image;
     }
 
     /**

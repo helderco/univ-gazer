@@ -7,5 +7,8 @@
 {% block breadcrumb %}
     <a href="{{ path('admin_photos') }}">{{ block('section') }}</a>
     <div class="breadcrumb_divider"></div>
-    <a class="current">{{ block('subtitle') }}</a>
+    {% block breadcrumb_section %}{% endblock %}
+    <a class="current">
+        {% block breadcrumb_current %}{{ block('subtitle') }}{% endblock %}
+    </a>
 {% endblock %}

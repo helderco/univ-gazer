@@ -1,13 +1,23 @@
 {% extends 'SiriuxGazerBundle:Default:home.html.twig' %}
 
-{% block fos_user_header %}Update photo information:{% endblock %}
+{% block fos_user_header %}
+    {% if not is_current_user and is_granted('ROLE_ADMIN') %}
+        View photo
+    {% else %}
+        Update photo information:
+    {% endif %}
+{% endblock %}
 
 {% block fos_user_content %}
-{% form_theme form theme %}
-<form action="{{ path('photo_update', {'id': image.media.id}) }}" {{ form_enctype(form) }} method="POST">
-    {{ form_widget(form) }}
-    <input type="submit" value="Update &rarr;" class="dropsubmitbtn" />
-</form>
+{% if not is_current_user and is_granted('ROLE_ADMIN') %}
+    <p>You are viewing a photo from user {{ user.name }} (<a href="{{ path('admin_user_photos', {'id': user.id}) }}">{{ user.username }}</a>).</p>
+{% else %}
+    {% form_theme form theme %}
+    <form action="{{ path('photo_update', {'id': image.media.id}) }}" {{ form_enctype(form) }} method="POST">
+        {{ form_widget(form) }}
+        <input type="submit" value="Update &rarr;" class="dropsubmitbtn" />
+    </form>
+{% endif %}
 {% endblock %}
 
 {% block javascripts %}
@@ -23,7 +33,11 @@
 
 {% block nav %}
 <nav id="filter">
-    <a href="{{ path('home') }}">Go back to gallery</a>
+    {% if not is_current_user and is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_photos') }}">Go back to photos</a>
+    {% else %}
+        <a href="{{ path('home') }}">Go back to gallery</a>
+    {% endif %}
     <a href="{{ path('photo_download', {'id': image.media.id }) }}">Download original</a>
 </nav>
 {% endblock %}
@@ -48,6 +62,10 @@
             <dd>{{ image.media.width }} x {{ image.media.height }}</dd>
             <dt>Size</dt>
             <dd>{{ image.media.hrsize }}</dd>
+            {% if not is_current_user and is_granted('ROLE_ADMIN') %}
+            <dt>User</dt>
+            <dd>{{ user.username }}</dd>
+            {% endif %}
             <dt>Uploaded at</dt>
             <dd>{{ image.media.createdAt|date("F jS Y, g:ia") }}</dd>
         </dl>

@@ -1,0 +1,69 @@
+
+<table class="tablesorter" cellspacing="0">
+    <thead>
+        <tr>
+            <th style="text-align:center"></th>
+            <th>Title</th>
+            {% if gallery is not defined %}
+            <th style="text-align:center">Gallery</th>
+            {% endif %}
+            <th style="text-align:center">Type</th>
+            <th style="text-align:center">Dimensions</th>
+            <th style="text-align:center">Size</th>
+            {% if user is not defined %}
+            <th style="text-align:center">User</th>
+            {% endif %}
+            <th style="text-align:center">Created at</th>
+            {% if delete_forms is defined %}
+            <th style="text-align:center">Actions</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for image in images %}
+        <tr>
+            <td style="text-align:center"><a href="{{ path('photo_show', {'id': image.media.id}) }}">{% thumbnail image.media, 'tiny' %}</a></td>
+            <td>{{ image.media.title }}</td>
+            {% if gallery is not defined %}
+            <td style="text-align:center"><a href="{{ path('admin_gallery_photos', {'id': image.gallery.id}) }}" title="View this gallery's photos">{{ image.gallery.name }}</a></td>
+            {% endif %}
+            <td style="text-align:center">{{ image.media.contentType|replace({'image/': ''}) }}</td>
+            <td style="text-align:center">{{ image.media.width }}x{{ image.media.height }}</td>
+            <td style="text-align:center">{{ image.media.hrsize }}</td>
+            {% if user is not defined %}
+            <td style="text-align:center"><a href="{{ path('admin_user_photos', {'id': image.media.user.id}) }}" title="View this user's photos">{{ image.media.user.username }}</a></td>
+            {% endif %}
+            <td style="text-align:center">{{ image.createdAt|date('Y-m-d H:i:s') }}</td>
+
+            {% if delete_forms is defined %}
+            <td style="text-align:center">
+                <form action="{{ path("admin_photo_delete", {'id': image.media.id}) }}" method="post" class="trash_photo" style="display:inline;">
+                    {{ form_widget(delete_forms[image.id]._token) }}
+                    {{ form_widget(delete_forms[image.id].id) }}
+                    <input type="image" src="{{ asset('bundles/siriuxadmin/images/icn_trash.png') }}" class="trash_photo" title="Delete photo" />
+                </form>
+            </td>
+            {% endif %}
+        </tr>
+        {% else %}
+            {% if (gallery is defined) or (user is defined) or (delete_forms is defined) %}
+                {% set colspan = 8 %}
+            {% else %}
+                {% set colspan = 9 %}
+            {% endif %}
+            <tr>
+                <td colspan="{{ colspan }}" style="text-align:center">
+                    <em>
+                        {% if gallery is defined %}
+                            No photos in this gallery
+                        {% elseif user is defined %}
+                            This user has no photos
+                        {% else %}
+                            There are no photos to show
+                        {% endif %}
+                    </em>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
