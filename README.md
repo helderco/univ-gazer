@@ -98,7 +98,7 @@ of Gazer. If you know how to do this, you can have a URL like this:
 
     http://gazer.local/
 
-### c) Create Galleries
+### e) Create Galleries
 
 If you didn't take advantage of the `gazer.sql` you should access the
 administration area now, and create some galleries. Without them, users
