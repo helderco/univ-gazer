@@ -16,6 +16,7 @@
     <div id="dropdown">
         <div class="container">
         {% block drop_body %}
+            {% block drop_side_container %}
             <div class="side">
                 <div class="dropsep"></div>
                 {% block drop_side %}
@@ -28,6 +29,7 @@
                 {% block fos_user_content %}{% endblock fos_user_content %}
                 {% endblock drop_side %}
             </div>
+            {% endblock drop_side_container %}
 
             {% block promo %}
             <div class="promo">
