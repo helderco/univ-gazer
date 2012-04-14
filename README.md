@@ -50,7 +50,7 @@ If the PHP version check failed, and you have a `php-5.3` and `php` installed
 (where `php` is 5.2), you can create a symbolic link to `php-5.3` somewhere
 and add it to your `$PATH`.
 
-    ln -s ``which php-5.3`` ~/bin/php
+    ln -s `which php-5.3` ~/bin/php
     export PATH=~/bin/:$PATH
 
 ### b) Install the Vendor Libraries
@@ -97,6 +97,8 @@ It is recommended that you create a virtual host pointing to the `web` folder
 of Gazer. If you know how to do this, you can have a URL like this:
 
     http://gazer.local/
+
+### c) Create Galleries
 
 If you didn't take advantage of the `gazer.sql` you should access the
 administration area now, and create some galleries. Without them, users
