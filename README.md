@@ -1,45 +1,40 @@
-Symfony Standard Edition
-========================
+Siriux Gazer Gallery
+====================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new app. If you want
-to learn more about the features included, see the "What's Inside?" section.
+Welcome to the Siriux Gazer Gallery application, a PHP project made for a
+class in college, using Symfony2.
 
-This document contains information on how to download and start using Symfony.
-For a more detailed explanation, see the
+This document contains information on how to download and start using Gazer.
+For a more detailed explanation on Symfony2 installation, see the
 [Installation chapter](http://symfony.com/doc/current/book/installation.html)
 of the Symfony Documentation.
 
-1) Download the Standard Edition
---------------------------------
+1) Download Gazer
+-----------------
 
-If you've already downloaded the standard edition, and unpacked it somewhere
-within your web root directory, then move on to the "Installation" section.
-
-To download the standard edition, you have two options:
+To download Gazer, you have two options:
 
 ### Download an archive file (*recommended*)
 
-The easiest way to get started is to download an archive of the standard edition
-(http://symfony.com/download). Unpack it somewhere under your web server root
-directory and you're done. The web root is wherever your web server (e.g. Apache)
-looks when you access `http://localhost` in a browser.
+The easiest way to get started is to download an archive of Gazer
+(https://github.com/helderco/gazer/downloads) with vendors. Unpack it
+somewhere under your web server root directory and you're done. The web
+root is wherever your web server (e.g. Apache) looks when you access
+`http://localhost` in a browser.
 
 ### Clone the git Repository
 
-We highly recommend that you download the packaged version of this distribution.
-But if you still want to use Git, you are on your own.
+If you want to use Git, run the following commands:
 
-Run the following commands:
-
-    git clone http://github.com/symfony/symfony-standard.git
-    cd symfony-standard
-    rm -rf .git
+    git clone git://github.com/helderco/gazer.git
+    cd gazer
+    mkdir -p app/logs app/cache web/uploads/media
+    cp app/config/parameters.ini.dist app/config/parameters.ini
 
 2) Installation
 ---------------
 
-Once you've downloaded the standard edition, installation is easy, and basically
+Once you've downloaded Gazer, installation is easy, and basically
 involves making sure your system is ready for Symfony.
 
 ### a) Check your System Configuration
@@ -51,97 +46,60 @@ for Symfony. To do this, execute the following:
 
 If you get any warnings or recommendations, fix these now before moving on.
 
+If the PHP version check failed, and you have a `php-5.3` and `php` installed
+(where `php` is 5.2), you can create a symbolic link to `php-5.3` somewhere
+and add it to your `$PATH`.
+
+    ln -s ``which php-5.3`` ~/bin/php
+    export PATH=~/bin/:$PATH
+
 ### b) Install the Vendor Libraries
 
-If you downloaded the archive "without vendors" or installed via git, then
-you need to download all of the necessary vendor libraries. If you're not
-sure if you need to do this, check to see if you have a ``vendor/`` directory.
-If you don't, or if that directory is empty, run the following:
+If you downloaded via git, then you need to download all of the necessary
+vendor libraries. If you're not sure if you need to do this, check to see
+if you have a ``vendor/`` directory. If you don't, or if that directory is
+empty, run the following:
 
     php bin/vendors install
 
 Note that you **must** have git installed and be able to execute the `git`
 command to execute this script. If you don't have git available, either install
-it or download Symfony with the vendor libraries already included.
+it or download the Gazer archive with the vendor libraries already included.
 
-### c) Access the Application via the Browser
+### c) Configure
 
-Congratulations! You're now ready to use Symfony. If you've unzipped Symfony
+Edit the file `app/config/parameters.ini` to configure your database and
+email credentials, and also create a secret key. If you don't yet have a
+database created for this application, create one now.
+
+If you downloaded the archive, it comes with a `gazer.sql` file that you can
+use to create the database tables and the first user, but if you're using Git,
+you can create the database tables with the following:
+
+    php app/console doctrine:schema:create
+
+And add an administrator:
+
+    php app/console fos:user:create admin admin@gazer.org s3cr3t --super-admin
+
+You now have your first user with access to the administration area, with
+username `admin` and password `s3cr3t`.
+
+### d) Access the Application via the Browser
+
+Congratulations! You're now ready to use Gazer. If you've unzipped Gazer
 in the web root of your computer, then you should be able to access the
-web version of the Symfony requirements check via:
+application via:
 
-    http://localhost/Symfony/web/config.php
+    http://localhost/gazer/web/
 
-If everything looks good, click the "Bypass configuration and go to the Welcome page"
-link to load up your first Symfony page.
+It is recommended that you create a virtual host pointing to the `web` folder
+of Gazer. If you know how to do this, you can have a URL like this:
 
-You can also use a web-based configurator by clicking on the "Configure your
-Symfony Application online" link of the ``config.php`` page.
+    http://gazer.local/
 
-To see a real-live Symfony page in action, access the following page:
-
-    web/app_dev.php/demo/hello/Fabien
-
-3) Learn about Symfony!
------------------------
-
-This distribution is meant to be the starting point for your application,
-but it also contains some sample code that you can learn from and play with.
-
-A great way to start learning Symfony is via the [Quick Tour](http://symfony.com/doc/current/quick_tour/the_big_picture.html),
-which will take you through all the basic features of Symfony2 and the test
-pages that are available in the standard edition.
-
-Once you're feeling good, you can move onto reading the official
-[Symfony2 book](http://symfony.com/doc/current/).
-
-Using this Edition as the Base of your Application
---------------------------------------------------
-
-Since the standard edition is fully-configured and comes with some examples,
-you'll need to make a few changes before using it to build your application.
-
-The distribution is configured with the following defaults:
-
-* Twig is the only configured template engine;
-* Doctrine ORM/DBAL is configured;
-* Swiftmailer is configured;
-* Annotations for everything are enabled.
-
-A default bundle, ``AcmeDemoBundle``, shows you Symfony2 in action. After
-playing with it, you can remove it by following these steps:
-
-* delete the ``src/Acme`` directory;
-* remove the routing entries referencing AcmeBundle in ``app/config/routing_dev.yml``;
-* remove the AcmeBundle from the registered bundles in ``app/AppKernel.php``;
-
-What's inside?
----------------
-The Symfony Standard Edition comes pre-configured with the following bundles:
-
-* **FrameworkBundle** - The core Symfony framework bundle
-* **SensioFrameworkExtraBundle** - Adds several enhancements, including template
-  and routing annotation capability ([documentation](http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html))
-* **DoctrineBundle** - Adds support for the Doctrine ORM
-  ([documentation](http://symfony.com/doc/current/book/doctrine.html))
-* **TwigBundle** - Adds support for the Twig templating engine
-  ([documentation](http://symfony.com/doc/current/book/templating.html))
-* **SecurityBundle** - Adds security by integrating Symfony's security component
-  ([documentation](http://symfony.com/doc/current/book/security.html))
-* **SwiftmailerBundle** - Adds support for Swiftmailer, a library for sending emails
-  ([documentation](http://symfony.com/doc/2.0/cookbook/email.html))
-* **MonologBundle** - Adds support for Monolog, a logging library
-  ([documentation](http://symfony.com/doc/2.0/cookbook/logging/monolog.html))
-* **AsseticBundle** - Adds support for Assetic, an asset processing library
-  ([documentation](http://symfony.com/doc/2.0/cookbook/assetic/asset_management.html))
-* **JMSSecurityExtraBundle** - Allows security to be added via annotations
-  ([documentation](http://symfony.com/doc/current/bundles/JMSSecurityExtraBundle/index.html))
-* **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-  the web debug toolbar
-* **SensioDistributionBundle** (in dev/test env) - Adds functionality for configuring
-  and working with Symfony distributions
-* **SensioGeneratorBundle** (in dev/test env) - Adds code generation capabilities
-  ([documentation](http://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html))
-* **AcmeDemoBundle** (in dev/test env) - A demo bundle with some example code
+If you didn't take advantage of the `gazer.sql` you should access the
+administration area now, and create some galleries. Without them, users
+can't upload any photos.
 
 Enjoy!
