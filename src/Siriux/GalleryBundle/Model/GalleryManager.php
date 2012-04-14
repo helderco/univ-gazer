@@ -18,19 +18,24 @@ use Doctrine\ORM\EntityRepository;
 use Siriux\GalleryBundle\Entity\Gallery;
 use Siriux\GalleryBundle\Model\ImageManager;
 
+/**
+ * Manager to handle Gallery objects
+ */
 class GalleryManager extends BaseManager
 {
+    /**
+     * @var ImageManager
+     */
     protected $im;
 
     public function __construct(EntityManager $em, $class, ImageManager $im)
     {
         $this->im = $im;
-
         parent::__construct($em, $class);
     }
 
     /**
-     * Creates a new empty Gallery with default values
+     * Create a new empty Gallery with default values
      * 
      * @return \Siriux\GalleryBundle\Entity\Gallery
      */
@@ -45,7 +50,7 @@ class GalleryManager extends BaseManager
     }
 
     /**
-     * Finds all galleries
+     * Find all galleries
      *
      * @return \ArrayCollection
      */
@@ -55,7 +60,7 @@ class GalleryManager extends BaseManager
     }
 
     /**
-     * Finds one gallery by id
+     * Find one gallery by id
      *
      * @param int $id
      * @return Gallery
@@ -65,6 +70,12 @@ class GalleryManager extends BaseManager
         return $this->getRepository()->findOneBy(array('id' => $id));
     }
 
+    /**
+     * Return the number of photos a gallery has
+     *
+     * @param GalleryInterface $gallery
+     * @return int
+     */
     public function getPhotosCount(GalleryInterface $gallery)
     {
         $images = $this->im->findBy(array('gallery' => $gallery->getId()));
@@ -73,7 +84,7 @@ class GalleryManager extends BaseManager
     }
 
     /**
-     * Deletes a gallery
+     * Delete a gallery and all associated photos
      *
      * @param Gallery $gallery
      * @return void

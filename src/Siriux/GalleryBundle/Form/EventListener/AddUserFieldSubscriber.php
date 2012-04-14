@@ -17,6 +17,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvents;
 use Siriux\UserBundle\Entity\User;
 
+/**
+ * Subscriber that sets the authenticated user uploading the file as owner
+ */
 class AddUserFieldSubscriber implements EventSubscriberInterface
 {
     private $user;

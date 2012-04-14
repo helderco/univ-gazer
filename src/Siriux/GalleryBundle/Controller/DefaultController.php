@@ -22,16 +22,21 @@ use Siriux\GalleryBundle\Entity\Image;
 use Siriux\GalleryBundle\Form\Type\ImageType;
 
 /**
+ * Photo management for a user (frontend)
+ *
  * @Route("/photo")
  */
 class DefaultController extends Controller
 {
     /**
+     * Lists all of the user's photos
+     *
      * @Route("/list")
      * @Template()
      */
     public function indexAction()
     {
+        // we should get only photos owned by the current user
         $user = $this->get('security.context')->getToken()->getUser();
         $images = $this->getImageManager()->findOwnedBy($user);
 
@@ -44,6 +49,8 @@ class DefaultController extends Controller
     }
 
     /**
+     * Views a photo
+     *
      * @Route("/{id}/view/{format}",
      *        requirements={"id" = "\d+"},
      *        defaults={"format" = "reference"},
@@ -56,10 +63,13 @@ class DefaultController extends Controller
         $image = $this->getImage($id);
         $form = $this->createForm(new ImageType('Update'), $image);
 
+        // the reference format has the original image dimensions
         if ($format == 'reference' && $image->getMedia()->getWidth() > 940) {
             $format = 'default_max';
         }
 
+        // check current user to allow an administrator
+        // to view a photo through this user's page (for twig exceptions)
         $user = $image->getMedia()->getUser();
         $authUser = $this->get('security.context')->getToken()->getUser();
         $currentUser = $user->isUser($authUser);
@@ -74,6 +84,8 @@ class DefaultController extends Controller
     }
 
     /**
+     * Allows downloading an image for a given format
+     *
      * @Route("/{id}/download/{format}",
      *          requirements={"id" = "\d+"},
      *          defaults={"format" = "reference"},
@@ -92,6 +104,8 @@ class DefaultController extends Controller
     }
 
     /**
+     * Uploads a new photo/image
+     *
      * @Route("/create", name="photo_create")
      * @Method("post")
      * @Template()
@@ -115,6 +129,8 @@ class DefaultController extends Controller
     }
 
     /**
+     * Updates a photo's information
+     *
      * @Route("/{id}/update",
      *        requirements={"id" = "\d+"},
      *        name="photo_update")
@@ -126,6 +142,7 @@ class DefaultController extends Controller
     {
         $image = $this->getImage($id);
 
+        // to save on form space, with allow deleting from the update form
         $imagePost = $this->getRequest()->get('siriux_image');
         if (isset($imagePost['delete'])) {
             $this->getImageManager()->delete($image);
@@ -134,6 +151,7 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('home'));
         }
 
+        // from here on it's an update
         $form = $this->createForm(new ImageType('Update'), $image);
         $form->bindRequest($this->getRequest());
 
@@ -150,11 +168,24 @@ class DefaultController extends Controller
         );
     }
 
+    /**
+     * Sets a flash message
+     *
+     * @param string $msg
+     */
     private function flash($msg)
     {
         $this->get('session')->setFlash('user', $msg);
     }
 
+    /**
+     * Returns an Image from a Media id
+     *
+     * @param int $media_id
+     * @return Image
+     * @throws NotFoundHttpException if image was not found
+     * @throws AccessDeniedHttpException if user is denied access to image
+     */
     private function getImage($media_id)
     {
         $image = $this->getImageManager()->findOneBy(array('media' => $media_id));
@@ -170,11 +201,22 @@ class DefaultController extends Controller
         return $image;
     }
 
+    /**
+     * Returns the image manager
+     *
+     * @return ImageManager
+     */
     private function getImageManager()
     {
         return $this->get('siriux.image.manager');
     }
 
+    /**
+     * Test access to an image using the configured download security strategy
+     *
+     * @param Media $media
+     * @return bool
+     */
     private function isGranted(Media $media)
     {
         return $this->get('sonata.media.pool')

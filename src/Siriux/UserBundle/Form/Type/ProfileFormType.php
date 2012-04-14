@@ -14,14 +14,11 @@ namespace Siriux\UserBundle\Form\Type;
 use Symfony\Component\Form\FormBuilder;
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
 
+/**
+ * Form type to represent a user (profile)
+ */
 class ProfileFormType extends BaseType
 {
-    /**
-     * Builds the embedded form representing the user.
-     *
-     * @param FormBuilder $builder
-     * @param array       $options
-     */
     protected function buildUserForm(FormBuilder $builder, array $options)
     {
         $builder

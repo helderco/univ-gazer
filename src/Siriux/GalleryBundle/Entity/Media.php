@@ -17,6 +17,8 @@ use Sonata\MediaBundle\Entity\BaseMedia as BaseMedia;
 use Siriux\UserBundle\Entity\User;
 
 /**
+ * Represents an uploaded image and related metadata
+ *
  * @ORM\Entity
  * @ORM\Table(name="media")
  */
@@ -39,6 +41,8 @@ class Media extends BaseMedia
     protected $title;
 
     /**
+     * Owner of this image
+     *
      * @ORM\ManyToOne(targetEntity="Siriux\UserBundle\Entity\User")
      *
      * @Assert\NotBlank(message="Who are you?", groups={"New"})
@@ -46,6 +50,9 @@ class Media extends BaseMedia
     protected $user;
 
     /**
+     * Holds an instance of UploadedFile object, or a reference to the
+     * image location in the filesystem
+     *
      * @Assert\NotBlank(message="Please upload an image.", groups={"New"})
      * @Assert\Image(maxSize="6M", groups={"New"})
      */
@@ -61,21 +68,41 @@ class Media extends BaseMedia
         return $this->id;
     }
 
+    /**
+     * Get image title
+     *
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /**
+     * Set new image title
+     *
+     * @param string $title
+     */
     public function setTitle($title)
     {
         $this->title = $title;
     }
 
+    /**
+     * Get user that owns this image
+     *
+     * @return User
+     */
     public function getUser()
     {
         return $this->user;
     }
 
+    /**
+     * Set onwer of this image
+     *
+     * @param User $user
+     */
     public function setUser(User $user)
     {
         $this->user = $user;

@@ -22,12 +22,34 @@ use Siriux\GalleryBundle\Entity\Media;
 use Siriux\GalleryBundle\Entity\Gallery;
 use Siriux\UserBundle\Entity\User;
 
+/**
+ * Manager to handle Image objects
+ */
 class ImageManager
 {
+    /**
+     * @var EntityManager
+     */
     protected $em;
+
+    /**
+     * @var SecurityContextInterface
+     */
     protected $security;
+
+    /**
+     * EntityRepository
+     */
     protected $repository;
+
+    /**
+     * @var GalleryManagerInterface
+     */
     protected $galleryManager;
+
+    /**
+     * @var MediaManagerInterface
+     */
     protected $mediaManager;
 
     public function __construct(
@@ -42,17 +64,30 @@ class ImageManager
         $this->mediaManager = $mediaManager;
     }
 
+    /**
+     * Get current authenticated user
+     *
+     * @return User
+     */
     protected function getUser()
     {
         return $this->security->getToken()->getUser();
     }
 
+    /**
+     * Persist image to the database
+     *
+     * @param Image $image
+     */
     public function save(Image $image)
     {
         $this->em->persist($image);
         $this->em->flush();
     }
 
+    /**
+     * Get the entity manager repository for Image objects
+     */
     protected function getRepository()
     {
         if (!$this->repository) {
@@ -63,7 +98,7 @@ class ImageManager
     }
 
     /**
-     * Creates an empty image instance
+     * Create an empty image instance
      *
      * @return Image
      */
@@ -72,15 +107,23 @@ class ImageManager
         return new Image();
     }
 
+    /**
+     * Find an image by id
+     *
+     * @param int $id
+     * @return Image
+     */
     public function find($id)
     {
         return $this->findOneBy(array('id' => $id));
     }
 
     /**
-     * Finds images by the given criteria
+     * Find images by the given criteria, order and number of elements
      *
      * @param array $criteria
+     * @param array $orderBy
+     * @param int $limit
      * @return array
      */
     public function findBy(array $criteria, $orderBy = array(), $limit = null)
@@ -88,11 +131,24 @@ class ImageManager
         return $this->getRepository()->findBy($criteria, $orderBy, $limit);
     }
 
+    /**
+     * Find all images
+     *
+     * @return array
+     */
     public function findAll()
     {
         return $this->findMany(null);
     }
 
+    /**
+     * Find images up to a limit
+     *
+     * A limit of null means there is no limit (same as findAll)
+     *
+     * @param int $limit
+     * @return array
+     */
     public function findMany($limit)
     {
         $orderBy = array('createdAt' => 'DESC');
@@ -101,7 +157,7 @@ class ImageManager
     }
 
     /**
-     * Finds one image by the given criteria
+     * Find one image by the given criteria
      *
      * @param array $criteria
      * @return Image
@@ -111,11 +167,23 @@ class ImageManager
         return $this->getRepository()->findOneBy($criteria);
     }
 
+    /**
+     * Find one image from a media id
+     *
+     * @param int $media_id
+     * @return Image
+     */
     public function findOneByMedia($media_id)
     {
         return $this->findOneBy(array('media' => $media_id));
     }
 
+    /**
+     * Find all enabled images owned by a user
+     *
+     * @param User $user
+     * @return array
+     */
     public function findOwnedBy(User $user)
     {
         $query = $this->em->createQuery("
@@ -134,7 +202,7 @@ class ImageManager
     }
 
     /**
-     * Deletes an image
+     * Delete an image
      *
      * @param Image $image
      * @return void
@@ -145,12 +213,24 @@ class ImageManager
         $this->em->flush();
     }
 
+    /**
+     * Set an image for removal in the unit of work (entity manager)
+     *
+     * Needs a call to flush() for the actual deletion
+     *
+     * @param Image $image
+     */
     protected function remove(Image $image)
     {
         $this->em->remove($image->getMedia());
         $this->em->remove($image);
     }
 
+    /**
+     * Set all images associated to a gallery for removal in the unit of work
+     *
+     * @param Gallery $gallery
+     */
     public function batchRemove(Gallery $gallery)
     {
         $images = $this->findBy(array('gallery' => $gallery->getId()));

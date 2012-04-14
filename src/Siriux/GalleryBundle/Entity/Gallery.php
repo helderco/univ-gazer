@@ -15,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Entity\BaseGallery as BaseGallery;
 
 /**
+ * Represents a gallery or category of photos/images
+ *
  * @ORM\Entity
  * @ORM\Table(name="gallery")
  */

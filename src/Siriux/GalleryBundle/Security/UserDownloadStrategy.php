@@ -16,6 +16,9 @@ use Sonata\MediaBundle\Security\DownloadStrategyInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
+/**
+ * Download stratety that grants access for an image to an admin and to its owner
+ */
 class UserDownloadStrategy implements DownloadStrategyInterface
 {
     protected $security;

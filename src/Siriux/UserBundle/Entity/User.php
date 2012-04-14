@@ -63,16 +63,22 @@ class User extends AbstractUser
      */
     protected $plainPassword;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
+    /**
+     * Get the user's full name
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * Set the user's full name
+     *
+     * @param string $name
+     * @return \Siriux\UserBundle\Entity\User
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -80,11 +86,22 @@ class User extends AbstractUser
         return $this;
     }
 
+    /**
+     * Test if user is an administrator
+     *
+     * @return bool
+     */
     public function isAdmin()
     {
         return $this->hasRole(self::ROLE_ADMIN);
     }
 
+    /**
+     * Add or remove the admin role for this user
+     *
+     * @param bool $boolean
+     * @return \Siriux\UserBundle\Entity\User
+     */
     public function setAdmin($boolean)
     {
         if ($boolean) {

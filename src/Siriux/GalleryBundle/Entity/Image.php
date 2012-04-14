@@ -17,6 +17,8 @@ use Sonata\MediaBundle\Entity\BaseGalleryHasMedia;
 use Siriux\UserBundle\Entity\User;
 
 /**
+ * Represents an association from a gallery and a media file
+ *
  * @ORM\Entity
  * @ORM\Table(name="gallery_media")
  */
@@ -34,6 +36,9 @@ class Image extends BaseGalleryHasMedia
      */
     protected $gallery;
 
+    /**
+     * Override constructor to set default values
+     */
     public function __construct()
     {
         $this->position = 0;

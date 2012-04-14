@@ -20,6 +20,9 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 use Siriux\UserBundle\Entity\User;
 use Siriux\GalleryBundle\Form\EventListener\AddUserFieldSubscriber;
 
+/**
+ * Form type that represents a Media object
+ */
 class MediaType extends AbstractType
 {
     protected $pool;
@@ -33,6 +36,9 @@ class MediaType extends AbstractType
 
     public function buildForm(FormBuilder $builder, array $options)
     {
+        // add a data transformer to translate the Media object between
+        // different representations (from a file path location to an
+        // object and vice versa)
         $builder->appendNormTransformer(
             new ProviderDataTransformer($this->pool, array(
                 'provider' => 'sonata.media.provider.image',
@@ -44,6 +50,7 @@ class MediaType extends AbstractType
             ->add('description', 'textarea', array('required' => false))
         ;
 
+        // we only want to upload on new posts
         if (in_array('New', $options['validation_groups'])) {
             $builder
                 ->add('binaryContent', 'file')

@@ -15,6 +15,14 @@ use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Provider\ImageProvider as BaseImageProvider;
 use Imagine\Exception\RuntimeException;
 
+/**
+ * Override for Sonata's image provider
+ *
+ * The original image provider throws an exception and bind time when
+ * the file isn't an image, because the Imagine library tries to open
+ * an invalid file. Validation comes after binding, so we need to
+ * ignore binding errors to use our validators later with $form->isvalid()
+ */
 class ImageProvider extends BaseImageProvider
 {
     /**

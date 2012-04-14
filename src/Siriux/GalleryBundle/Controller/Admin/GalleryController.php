@@ -20,11 +20,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Siriux\GalleryBundle\Entity\Gallery;
 
 /**
+ * Galleries management
+ *
  * @Route("/admin/galleries")
  */
 class GalleryController extends Controller
 {
     /**
+     * Shows a list of all galleries
+     *
      * @Route("", name="admin_galleries")
      * @Template()
      */
@@ -48,6 +52,8 @@ class GalleryController extends Controller
     }
 
     /**
+     * Creates a new gallery
+     *
      * @Route("/new", name="admin_galleries_new")
      * @Template()
      */
@@ -75,6 +81,8 @@ class GalleryController extends Controller
     }
 
     /**
+     * Edits a gallery
+     *
      * @Route("/{id}/edit", name="admin_gallery_edit")
      * @Template()
      */
@@ -115,6 +123,8 @@ class GalleryController extends Controller
     }
 
     /**
+     * Deletes a gallery
+     *
      * @Route("/{id}/delete", name="admin_gallery_delete")
      * @Method("post")
      */
@@ -126,7 +136,7 @@ class GalleryController extends Controller
         if ($form->isValid()) {
             $gallery = $this->getGalleryManager()->find($id);
 
-            if ($gallery !== null) {
+            if ($gallery) {
                 $this->getGalleryManager()->delete($gallery);
                 $this->flash('success', sprintf("Gallery `%s` was deleted.", $gallery->getName()));
             }
@@ -159,6 +169,12 @@ class GalleryController extends Controller
         return $this->get('siriux.gallery.manager');
     }
 
+    /**
+     * Creates the edit form for a gallery
+     *
+     * @param Gallery $gallery
+     * @return Form
+     */
     private function createEditForm(Gallery $gallery)
     {
         return $this->createFormBuilder($gallery)
@@ -167,6 +183,12 @@ class GalleryController extends Controller
                 ->getForm();
     }
 
+    /**
+     * Creates a delete form for a gallery
+     *
+     * @param integer $id
+     * @return Form
+     */
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))

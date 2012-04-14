@@ -14,6 +14,9 @@ namespace Siriux\UserBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
+/**
+ * Form type to edit a user in the backend
+ */
 class UserType extends AbstractType
 {
     private $validationGroup;
@@ -34,6 +37,7 @@ class UserType extends AbstractType
             ->add('email')
         ;
 
+        // don't allow the admin to demote or disable himself
         if (!$this->currentUser) {
             $builder
                 ->add('admin', 'checkbox', array('label' => 'Administrator'))

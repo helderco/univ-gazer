@@ -14,6 +14,11 @@ namespace Siriux\UserBundle\Form\Type;
 use Symfony\Component\Form\FormBuilder;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
 
+/**
+ * Registration form type
+ *
+ * This override adds a new field: user's full name
+ */
 class RegistrationFormType extends BaseType
 {
     public function buildForm(FormBuilder $builder, array $options)

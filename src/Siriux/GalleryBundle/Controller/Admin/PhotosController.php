@@ -19,11 +19,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Siriux\GalleryBundle\Model\ImageManager;
 
 /**
+ * Photos management from the backend
+ *
  * @Route("/admin/photos")
  */
 class PhotosController extends Controller
 {
     /**
+     * Displays all photos
+     *
      * @Route("", name="admin_photos")
      * @Template()
      */
@@ -38,6 +42,8 @@ class PhotosController extends Controller
     }
 
     /**
+     * Displays all photos in a given gallery
+     *
      * @Route("/gallery/{id}",
      *        requirements={"id" = "\d+"},
      *        name="admin_gallery_photos")
@@ -57,6 +63,8 @@ class PhotosController extends Controller
     }
 
     /**
+     * Displays all photos from a given user
+     *
      * @Route("/user/{id}",
      *        requirements={"id" = "\d+"},
      *        name="admin_user_photos")
@@ -76,7 +84,8 @@ class PhotosController extends Controller
     }
 
     /**
-     * @Template()
+     * Deletes a photo
+     *
      * @Route("/{id}/delete",
      *        requirements={"id" = "\d+"},
      *        name="admin_photo_delete")
@@ -95,11 +104,22 @@ class PhotosController extends Controller
         return $this->redirect($this->generateUrl('admin_photos'));
     }
 
+    /**
+     * Returns the image manager
+     *
+     * @return ImageManager
+     */
     private function getImageManager()
     {
         return $this->get('siriux.image.manager');
     }
 
+    /**
+     * Returns a delete form for an image
+     *
+     * @param integer $id
+     * @return Form
+     */
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
@@ -108,6 +128,12 @@ class PhotosController extends Controller
         ;
     }
 
+    /**
+     * Returns an array with delete forms from an array of Image objects
+     *
+     * @param array $images
+     * @return array
+     */
     private function createDeleteForms($images)
     {
         $delete_forms = array();
@@ -119,6 +145,13 @@ class PhotosController extends Controller
         return $delete_forms;
     }
 
+    /**
+     * Returns a Gallery object from an id
+     *
+     * @param integer $id
+     * @return SiriuxGalleryBundle\Entity\Gallery
+     * @throws NotFoundHttpException if gallery is not found
+     */
     private function getGallery($id)
     {
         $gallery = $this->get('siriux.gallery.manager')->find($id);
@@ -130,6 +163,13 @@ class PhotosController extends Controller
         return $gallery;
     }
 
+    /**
+     * Returns an Image object from an id
+     *
+     * @param integer $id
+     * @return SiriuxGalleryBundle\Entity\Image
+     * @throws NotFoundHttpException if image is not found
+     */
     private function getImage($id)
     {
         $image = $this->getImageManager()->findOneByMedia($id);
@@ -144,7 +184,7 @@ class PhotosController extends Controller
     /**
      * Gets a user from an id.
      *
-     * @param int $id
+     * @param integer $id
      * @return SiriuxUserBundle\Entity\User
      * @throws NotFoundHttpException if user is not found.
      */
