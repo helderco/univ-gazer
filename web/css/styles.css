@@ -227,12 +227,13 @@ img.logo {
 }
 
 #dropdown div.side {
-    position:absolute;
+    position: relative;
     height: 280px;
     width: 248px;
-    left: 836px;
-    top: 33px;
     padding: 10px 33px;
+    float: right;
+    margin-top: 40px;
+    margin-right: -40px;
 }
 
 #dropdown div.side h6 {

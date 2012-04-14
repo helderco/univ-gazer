@@ -16,6 +16,18 @@
     <div id="dropdown">
         <div class="container">
         {% block drop_body %}
+            <div class="side">
+                <div class="dropsep"></div>
+                {% block drop_side %}
+                <h6>{% block fos_user_header %}{% endblock fos_user_header %}</h6>
+                {% for key, message in app.session.getFlashes %}
+                    {% if key != 'user' %}
+                        <div class="alert alert_{{key}}">{{ message|trans }}</div>
+                    {% endif %}
+                {% endfor %}
+                {% block fos_user_content %}{% endblock fos_user_content %}
+                {% endblock drop_side %}
+            </div>
 
             {% block promo %}
             <div class="promo">
@@ -51,20 +63,6 @@
             {% endif %}
             {% endblock %}
             </div>
-
-            <div class="side">
-                <div class="dropsep"></div>
-                {% block drop_side %}
-                <h6>{% block fos_user_header %}{% endblock fos_user_header %}</h6>
-                {% for key, message in app.session.getFlashes %}
-                    {% if key != 'user' %}
-                        <div class="alert alert_{{key}}">{{ message|trans }}</div>
-                    {% endif %}
-                {% endfor %}
-                {% block fos_user_content %}{% endblock fos_user_content %}
-                {% endblock drop_side %}
-            </div>
-
         {% endblock drop_body %}
         </div>
     </div>
