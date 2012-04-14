@@ -185,7 +185,13 @@ class AdminController extends Controller
             if ($this->isCurrentUser($user)) {
                 $this->get('session')->setFlash('error', "You can't delete yourself!");
             } else {
+                $username = $user->getUsername();
+
+                // remove this user's photos first and then delete the user
+                $removed = $this->get('siriux.image.manager')->batchRemove($user);
                 $this->getUserManager()->deleteUser($user);
+
+                $this->get('session')->setFlash('success', "User $username deleted successfully (with $removed associated photos)!");
             }
         }
 

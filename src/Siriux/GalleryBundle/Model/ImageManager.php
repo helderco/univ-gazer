@@ -227,15 +227,28 @@ class ImageManager
     }
 
     /**
-     * Set all images associated to a gallery for removal in the unit of work
+     * Set all images associated to a gallery or user for removal in the unit of work
      *
-     * @param Gallery $gallery
+     * @param Gallery|User $object
+     * @return number of associated objects removed
      */
-    public function batchRemove(Gallery $gallery)
+    public function batchRemove($object)
     {
-        $images = $this->findBy(array('gallery' => $gallery->getId()));
+        $count = 0;
+        $images = array();
+
+        if ($object instanceof Gallery) {
+            $images = $this->findBy(array('gallery' => $object->getId()));
+        }
+        if ($object instanceof User) {
+            $images = $this->findOwnedBy($object);
+        }
+
         foreach ($images as $image) {
             $this->remove($image);
+            $count++;
         }
+
+        return $count;
     }
 }
