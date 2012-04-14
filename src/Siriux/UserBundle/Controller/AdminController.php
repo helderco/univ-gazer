@@ -41,7 +41,8 @@ class AdminController extends Controller
         $admins_list = array();
         $delete_forms = array();
         $photos_count = array();
-        
+
+        // we need two lists for users and admins to make separate tabs in the listing
         foreach ($users as $user) {
             if ($user->hasRole('ROLE_ADMIN') || $user->isSuperAdmin()) {
                 array_push($admins_list, $user);
