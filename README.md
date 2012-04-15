@@ -80,7 +80,7 @@ you can create the database tables with the following:
 
 And add an administrator:
 
-    php app/console fos:user:create admin admin@gazer.org s3cr3t --super-admin
+    php app/console fos:user:create admin gazer@siriux.org s3cr3t --super-admin
 
 You now have your first user with access to the administration area, with
 username `admin` and password `s3cr3t`.
